@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Card index{% endblock %}
+
+{% block body %}
+    <h1>Card index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Created_at</th>
+                <th>Front_maincontent</th>
+                <th>Front_subcontent</th>
+                <th>Back_main_content</th>
+                <th>Back_subcontent</th>
+                <th>Front_clue</th>
+                <th>Back_clue</th>
+                <th>Note</th>
+                <th>Stage</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for card in cards %}
+            <tr>
+                <td>{{ card.id }}</td>
+                <td>{{ card.createdAt ? card.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ card.frontMaincontent }}</td>
+                <td>{{ card.frontSubcontent }}</td>
+                <td>{{ card.backMainContent }}</td>
+                <td>{{ card.backSubcontent }}</td>
+                <td>{{ card.frontClue }}</td>
+                <td>{{ card.backClue }}</td>
+                <td>{{ card.note }}</td>
+                <td>{{ card.stage }}</td>
+                <td>
+                    <a href="{{ path('card_show', {'id': card.id}) }}">show</a>
+                    <a href="{{ path('card_edit', {'id': card.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('card_new') }}">Create new</a>
+{% endblock %}
