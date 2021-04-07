@@ -25,7 +25,7 @@ class Card
     /**
      * @ORM\Column(type="text")
      */
-    private $front_maincontent;
+    private $front_main_content;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -86,7 +86,7 @@ class Card
 
     public function setFrontMainContent(?string $front_main_content): self
     {
-        $this->content_front = $front_main_content;
+        $this->front_main_content = $front_main_content;
 
         return $this;
     }
