@@ -26,6 +26,16 @@ class CardController extends AbstractController
     }
 
     /**
+     * @Route("/play", name="card_play", methods={"GET"})
+     */
+    public function play(CardRepository $cardRepository): Response
+    {
+        return $this->render('card/play.html.twig', [
+            'cards' => $cardRepository->findAll(),
+        ]);
+    }
+
+    /**
      * @Route("/new", name="card_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -55,16 +65,6 @@ class CardController extends AbstractController
     {
         return $this->render('card/show.html.twig', [
             'card' => $card,
-        ]);
-    }
-
-    /**
-     * @Route("/play", name="card_play", methods={"GET"})
-     */
-    public function play(CardRepository $cardRepository): Response
-    {
-        return $this->render('card/play.html.twig', [
-            'cards' => $cardRepository->findAll(),
         ]);
     }
 

@@ -1,3 +1,6 @@
+// Normalize
+// General template (Header box, Main and footer)
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,7 +9,6 @@
 
 body, html {
     width: auto;
-    // min-width: 100vw;
     height: auto;
     min-height: 100vh;
 
@@ -24,14 +26,6 @@ body, html {
     }
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    // justify-content: space-between;
-    // align-items: center;
-    // align-content: stretch;
-}
-
 ul {
     list-style: none;
 }
@@ -44,4 +38,25 @@ a {
 // DETAILS
 .inht {
     color: inherit;
+}
+
+// General Template
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+header {
+    min-height: 30px;
+    background-color: $black;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer {
+    flex-basis: 20px;
+    background-color: $black;
 }
