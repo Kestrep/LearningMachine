@@ -1,0 +1,48 @@
+body {
+    background-color: salmon;
+}
+// Global variables
+$orange: #FE5900;
+
+$light-gray: #ECEEED;
+$light-grey: #ECEEED;
+$lightgray: #ECEEED;
+$lightgrey: #ECEEED;
+
+$white: #FFFFFF;
+
+$dark-gray: #424C4E;
+$dark-grey: #424C4E;
+$darkgray: #424C4E;
+$darkgrey: #424C4E;
+
+
+$black: #171B1C;
+$green: #33B312;
+$red: #BF0404;
+
+$breakpoints: (
+    xl: 1240,
+    lg: 1024,
+    md: 760,
+    sm: 560,
+    xs: 480
+);
+
+$gutter: 1rem;
+$separation_number: 4; // Define the number of columns used in the application
+
+
+// The utilities
+@import "./fonts/fonts.scss";
+@import "./icons/icons.scss";
+@import "./scss-utilities/breakpoints.scss";
+@import "./scss-utilities/fast-template.scss";
+
+
+// The components
+// @import "./scss-components/buttons.scss";
+
+
+// The page's templates
+@import "./scss-templates/normalize.scss";

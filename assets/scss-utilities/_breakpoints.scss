@@ -1,0 +1,17 @@
+@function assert-value($var) {
+    @each $key, $value in $breakpoints {
+        @if ($var == $key) {@return $value};
+        @return $var;
+    }
+};
+
+@mixin lt($value) {
+    @media all and (max-width: assert-value($value) + px) {
+        @content;
+    }
+};
+@mixin mt($value) {
+    @media all and (min-width: assert-value($value) + px) {
+        @content;
+    }
+};
