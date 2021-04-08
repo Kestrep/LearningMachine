@@ -1,0 +1,14 @@
+header {
+    padding: $gutter/2 $gutter;
+        img {
+            margin-right: $gutter / 2;
+            max-height: 40px;
+        }
+
+
+    .burger {
+        margin-left: auto;
+
+        z-index: 3;
+    }
+}

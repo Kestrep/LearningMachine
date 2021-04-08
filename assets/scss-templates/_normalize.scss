@@ -53,10 +53,11 @@ header {
 }
 
 main {
+    position: relative;
     flex-grow: 1;
 }
 
 footer {
-    flex-basis: 20px;
+    flex-basis: $footer-size;
     background-color: $black;
 }

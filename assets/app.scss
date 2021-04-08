@@ -1,6 +1,3 @@
-body {
-    background-color: salmon;
-}
 // Global variables
 $orange: #FE5900;
 
@@ -32,6 +29,9 @@ $breakpoints: (
 $gutter: 1rem;
 $separation_number: 4; // Define the number of columns used in the application
 
+// Components variables
+$footer-size: 20px;
+
 
 // The utilities
 @import "./fonts/fonts.scss";
@@ -42,6 +42,8 @@ $separation_number: 4; // Define the number of columns used in the application
 
 // The components
 @import "./scss-components/header.scss";
+@import "./scss-components/burger.scss";
+@import "./scss-components/screen-menu.scss";
 
 
 // The page's templates
