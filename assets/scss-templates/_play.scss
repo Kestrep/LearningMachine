@@ -1,0 +1,74 @@
+main.play {
+    flex-direction: column;
+
+    // HEADER
+    .header {
+        flex-wrap: wrap;
+    }
+
+    .square {
+        display: inline-block;
+        top: 50%;
+        left: 0;
+
+        height: 4px;
+        width: 4px;
+        margin: 4px;
+
+        background-color: $orange;
+    }
+    
+    .card-breadcrumb {
+        .domain, .subdomain {
+            font-size: 0.9rem;
+        }
+        .subdomain {
+            margin-left: $gutter;
+            font-size: 1rem;
+        }
+    }
+    .info-scroll {
+        flex-basis: 100%;
+        flex-shrink: 0;
+
+        color: $orange;
+        font-weight: 200;
+        font-size: 0.8rem;
+        text-decoration: underline;
+
+        text-align: right;
+    }
+
+    // PLAYGROUND
+    .main {
+        position: relative;
+        flex-grow: 1;
+        align-self: stretch;
+    }
+
+    .playground-ctr {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 100%;
+        max-width: 360px;
+        
+        // Set the size proportion
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            margin-top: 13%;
+        }
+
+        .card-side {
+            background-color: salmon;
+        }
+    
+    }
+}

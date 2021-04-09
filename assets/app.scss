@@ -43,8 +43,10 @@ $footer-size: 20px;
 // The components
 @import "./scss-components/header.scss";
 @import "./scss-components/burger.scss";
+@import "./scss-components/buttons.scss";
 @import "./scss-components/screen-menu.scss";
 
 
 // The page's templates
 @import "./scss-templates/normalize.scss";
+@import "./scss-templates/play.scss";

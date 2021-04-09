@@ -1,0 +1,45 @@
+[class^="btn"] {
+    position: relative;
+    display: block;
+    padding: $gutter / 1.5;
+
+    user-select: none;
+
+    border-radius: 8px;
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 5px;
+        transform: translateX(-50%) scaleX(0);
+
+        height: 1px;
+        width: 80%;
+
+        transition: 0.3s ease-out;
+
+    }
+
+    &:hover::before, &:focus::before {
+        transform: translateX(-50%) scaleX(1);
+    }
+}
+
+.btn-orange {
+    background-color: $orange;
+    color: $black;
+
+    &::before {
+        background-color: $black;
+    }
+}
+
+.btn-green {
+    background-color: $green;
+    color: $white;
+
+    &::before {
+        background-color: $white;
+    }
+}
