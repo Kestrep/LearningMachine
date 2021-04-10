@@ -32,6 +32,8 @@ $footer-size: 20px;
 
 
 // The components
+@import "./scss-components/debug.scss";
+
 @import "./scss-components/header.scss";
 @import "./scss-components/burger.scss";
 @import "./scss-components/buttons.scss";

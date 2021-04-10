@@ -10,8 +10,8 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
-        {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+        {% block javascripts %}
         {% endblock %}
     </head>
     <body>
@@ -20,6 +20,9 @@
             {% block body %}{% endblock %}
 
         <footer></footer>
+        <div class="debug">
+            <div class="btn-orange restore-button">Restore</div>
+        </div>
     </body>
 </html>
 
