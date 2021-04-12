@@ -1,0 +1,53 @@
+label, textarea, input, select {
+    display: block;
+    width: 100%;
+    padding: $gutter /4;
+
+    border: transparent;
+    outline: none;
+
+    font-family: $montserrat;
+    font-size: 1rem;
+    line-height: 1.2rem;
+
+    &:invalid {
+        outline: transparent;
+        border: none;
+        // horizontal vertical blur spread color 
+        box-shadow: 0px 0px 3px 1px rgba($red, 0.8);
+    }
+    &:focus:invalid {
+        box-shadow: 0px 0px 2px 1px rgba($red, 0.5);
+    }
+    &:focus:valid {
+        outline: transparent;
+        border: none;
+        // horizontal vertical blur spread color 
+        box-shadow: 0px 0px 2px 1px rgba($green, 0.5);
+    }
+}
+
+label {
+
+    margin-top: $gutter;
+    margin-bottom: $gutter / 4;
+    color: $orange;
+    text-transform: uppercase;
+
+    &::first-letter {
+        font-size: 1.2em;
+    }
+}
+
+textarea {
+    height: 5rem;
+    overflow-y: auto;
+    resize: none;
+    scrollbar-color: rgba($black, 0.4) rgba($darkgrey, 0.2);
+    scrollbar-width: thin;
+}
+
+select {
+    padding-top: $gutter /2;
+    padding-bottom: $gutter /2;
+}

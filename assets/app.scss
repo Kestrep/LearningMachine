@@ -42,6 +42,7 @@ $footer-size: 20px;
 @import "./scss-components/flashcard.scss";
 
 
-// The page's templates
+// The page's templates (Layouts)
 @import "./scss-templates/normalize.scss";
 @import "./scss-templates/play.scss";
+@import "./scss-templates/form.scss";

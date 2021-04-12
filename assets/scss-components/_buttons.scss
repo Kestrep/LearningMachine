@@ -1,11 +1,18 @@
-[class^="btn"] {
+button, [class^="btn"] {
     position: relative;
     display: block;
+    margin: $gutter / 2;
     padding: $gutter / 1.5;
 
     user-select: none;
 
     border-radius: 8px;
+
+    // Normalize
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    font-family: $montserrat;
 
     &:before {
         content: '';
@@ -37,6 +44,15 @@
 
 .btn-green {
     background-color: $green;
+    color: $white;
+
+    &::before {
+        background-color: $white;
+    }
+}
+
+.btn-darkgrey {
+    background-color: $darkgrey;
     color: $white;
 
     &::before {
