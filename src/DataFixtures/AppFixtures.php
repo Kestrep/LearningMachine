@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Card;
+use App\Entity\User;
 use Faker\Factory;
 
 
@@ -34,6 +35,15 @@ class AppFixtures extends Fixture
                 ->setStage(mt_rand(0,7));
 
             $manager->persist($card);
+        }
+
+        for ($i=0; $i < 30; $i++) { 
+            $user = new User();
+
+            $user;
+
+
+            $manager->persist($user);
         }
 
         $manager->flush();
