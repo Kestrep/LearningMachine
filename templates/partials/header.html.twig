@@ -10,7 +10,7 @@
 	</div>
 	<div id="main-screen-menu" class="screen-menu">
 		<div class="header">
-			<div class="salutation">Bonjour {{ app.user.firstname }} !</div>
+			<div class="salutation">Bonjour {{ app.user ? app.user.firstname }} !</div>
 		</div>
 		<ul class="menu-list">
 			{% if app.user %}
