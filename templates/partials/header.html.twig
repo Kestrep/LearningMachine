@@ -1,23 +1,39 @@
 <header class="d-bc">
-    <div class="logo">
-        <img src="{{ asset('build/images/Popeye.png') }}" alt="" srcset="">
-    </div>
-    <div class="site-ttl">
-        <img src="{{ asset('build/images/NomDuSite.png') }}" alt="" srcset="">
-    </div>
-    <div class="burger" data-target="main-screen-menu">
-        <span></span>
-    </div>
-    <div id="main-screen-menu" class="screen-menu">
-                <div class="header">
-                    <div class="salutation">Bonjour Machin</div>
-                </div>
-                <ul class="menu-list">
-                    <li class="list-item"><a href="{{ path('app_login') }}">Login</a></li>
-                    <li class="list-item"><a href="{{ path('card_play') }}">Jouer</a></li>
-                    <li class="list-item"><a href="{{ path('card_new') }}">Créer</a></li>
-                    <li class="list-item"><a href="{{ path('card_index') }}">Parcourir</a></li>
-                    <li class="list-item"><a href="#">Paramètres</a></li>
-                </ul>
-    </div>
+	<div class="logo">
+		<img src="{{ asset('build/images/Popeye.png') }}" alt="" srcset="">
+	</div>
+	<div class="site-ttl">
+		<img src="{{ asset('build/images/NomDuSite.png') }}" alt="" srcset="">
+	</div>
+	<div class="burger" data-target="main-screen-menu">
+		<span></span>
+	</div>
+	<div id="main-screen-menu" class="screen-menu">
+		<div class="header">
+			<div class="salutation">Bonjour {{ app.user.firstname }} !</div>
+		</div>
+		<ul class="menu-list">
+			{% if app.user %}
+				<li class="list-item">
+					<a href="{{ path('app_logout') }}">Logout</a>
+				</li>
+			{% elseif not app.user %}
+			<li class="list-item">
+				<a href="{{ path('app_login') }}">Login</a>
+			</li>
+			{% endif %}
+			<li class="list-item">
+				<a href="{{ path('card_play') }}">Jouer</a>
+			</li>
+			<li class="list-item">
+				<a href="{{ path('card_new') }}">Créer</a>
+			</li>
+			<li class="list-item">
+				<a href="{{ path('card_index') }}">Parcourir</a>
+			</li>
+			<li class="list-item">
+				<a href="#">Paramètres</a>
+			</li>
+		</ul>
+	</div>
 </header>
