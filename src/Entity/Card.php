@@ -62,6 +62,11 @@ class Card
      */
     private $stage;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=SubCategory::class, inversedBy="cards")
+     */
+    private $subCategory;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,6 +176,18 @@ class Card
     public function setStage(int $stage): self
     {
         $this->stage = $stage;
+
+        return $this;
+    }
+
+    public function getSubCategory(): ?SubCategory
+    {
+        return $this->subCategory;
+    }
+
+    public function setSubCategory(?SubCategory $subCategory): self
+    {
+        $this->subCategory = $subCategory;
 
         return $this;
     }
