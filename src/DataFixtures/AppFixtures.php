@@ -27,7 +27,7 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         // Génération des utilisateurs
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 15; $i++) {
             $user = new User();
 
             $user
@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
                 ->setLastConnectionAt($faker->dateTimeBetween('-1 week', 'now'))
                 ->setPassword($this->passwordEncoder->encodePassword($user, 'pass'));
 
-            for ($j=0; $j < mt_rand(1,5); $j++) { 
+            for ($j=0; $j < mt_rand(1,3); $j++) { 
                 $category = new Category();
 
                 $category->setName($faker->word());
@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
                     $subCategory->setName($faker->word());
                     $category->addSubCategory($subCategory);
 
-                    for ($l = 0; $l < 30; $l++) {
+                    for ($l = 0; $l < mt_rand(3, 7); $l++) {
                         $card = new Card();
             
                         $card

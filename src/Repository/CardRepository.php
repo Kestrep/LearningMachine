@@ -19,6 +19,38 @@ class CardRepository extends ServiceEntityRepository
         parent::__construct($registry, Card::class);
     }
 
+    /**
+     * 
+     */
+    public function findUserCards($user)
+    {
+        $query = $this
+                    ->createQueryBuilder('c')
+                    ->join('c.subCategory', 's')
+                    ->join('s.category', 'cat')
+                    ->join('cat.user', 'u')
+                    ->where('u = :user')
+                    ->setParameter('user', $user)
+                    // ->setFirstResult(50)
+                    // ->setMaxResults(3)
+                    ->getQuery()
+                    ->getResult()
+                    ;
+        return $query;
+    }
+
+    /**
+     * Je prends le User
+     * Je prends les catégories qui m'intéressent (par défault : toutes)
+     * Je prends pour chacune les sous-catégories qui m'intéressent (Par défault : toutes)
+     * Je prends toutes les cards liées
+     * Max-Résult : 10
+     * 
+     * Voir pour une pagination
+     * 
+     * Il faut donc que je parte du UserRepository
+     */
+
     // /**
     //  * @return Card[] Returns an array of Card objects
     //  */
