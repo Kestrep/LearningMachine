@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Card;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @method Card|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,15 +15,17 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CardRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $user;
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
+        $this->user = $security->getUser();
         parent::__construct($registry, Card::class);
     }
 
     /**
      * 
      */
-    public function findUserCards($user)
+    public function findUserCards()
     {
         $query = $this
                     ->createQueryBuilder('c')
@@ -30,7 +33,7 @@ class CardRepository extends ServiceEntityRepository
                     ->join('s.category', 'cat')
                     ->join('cat.user', 'u')
                     ->where('u = :user')
-                    ->setParameter('user', $user)
+                    ->setParameter('user', $this->user)
                     // ->setFirstResult(50)
                     // ->setMaxResults(3)
                     ->getQuery()
