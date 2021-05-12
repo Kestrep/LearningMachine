@@ -9,8 +9,10 @@
 import './app.scss';
 
 import handleBurger from './js/burger';
+import debugButtons from './js/debug';
 
 handleBurger()
+debugButtons()
 
 // start the Stimulus application
 // import './bootstrap';
