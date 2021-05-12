@@ -5,13 +5,16 @@ namespace App\Controller;
 use App\Entity\Card;
 use App\Form\CardType;
 use App\Repository\CardRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/card")
+ * @Security("is_granted('ROLE_USER')", message="Vous devez vous connecter pour pouvoir accéder au menu")
  */
 class CardController extends AbstractController
 {
@@ -38,16 +41,18 @@ class CardController extends AbstractController
     /**
      * @Route("/new", name="card_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $card = new Card();
         $form = $this->createForm(CardType::class, $card);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($card);
-            $entityManager->flush();
+
+            $card->setCreatedAt(new \DateTime);
+            $card->setStage(2);
+            $em->persist($card);
+            $em->flush();
 
             return $this->redirectToRoute('card_index');
         }
@@ -70,6 +75,7 @@ class CardController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="card_edit", methods={"GET","POST"})
+     * @Security("user === card.getSubCategory().getCategory().getUser()", message="Cette annonce ne vous appartient pas")
      */
     public function edit(Request $request, Card $card): Response
     {

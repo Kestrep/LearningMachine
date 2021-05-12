@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\SubCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @method SubCategory|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +15,29 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SubCategoryRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $currentUser;
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
+        $this->currentUser = $security->getUser();
         parent::__construct($registry, SubCategory::class);
+    }
+
+    /**
+     * @return SubCategory[] Returns an array of SubCategory owned by the current user
+     */
+    public function findAllFromCurrentUser() {
+        $query = $this
+                    ->createQueryBuilder('s')
+                    ->join('s.category', 'cat')
+                    ->join('cat.user', 'u')
+                    ->where('u = :user')
+                    ->setParameter('user', $this->currentUser)
+                    ->setMaxResults(2)
+                    ->orderBy('s.name', 'DESC')
+                    ->getQuery()
+                    ->getResult()
+                    ;
+        return $query;
     }
 
     // /**

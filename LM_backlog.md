@@ -1,43 +1,43 @@
-Checker ce qu'on a déjà fait :
-  Dans LM - Obs
-  Dans Plateforme
-  Dans Simbnb
-    Faire un document MD, repérer toutes les notes
+mot de passe : pass
 
-Regarder comment a été géré la pagination
+# Right Now
 
-Etre clair sur ce qu'on veut :
-  Pour le premier :
-    La liste de toutes les cards dont le User
+- [ ] Dans la page création, avoir un bouton DEBUG qui, quand on clicke dessus, permet de mettre dans le pièce papier un lorem de la taille voulue
 
+- [ ] Modification d'une card
+  - [ ] Ajouter un champs 'dernière modification le...
+  - [ ] Pouvoir faire changer de catégorie
+    - [ ] En requête, donc un minimum d'information pour pouvoir faire l'effet
+    - [ ] vérifier que les anciennes catégories ont déjà été supprimées
 
-**Comment faire un système où les catégories **
-
-Faire un repository de sécurité ?
-- Faire un repository personnalisé
-- Qui part de User
-- Qui fait les requêtes
-  - Avec des sous directions...
-
-
-- Vérifier que ne s'affiche que les cards du User
-- Lier les catégories et les sous-catégories au form de la carte
-
-- Faire le form AJAX dans la modal
-- Faire un filtre standard dans l'affichage des cards
-  - Trier par domaine
-  - Trier par sous-domaine
-  - 
+# Backlog
 
 
 
-- Faire les requêtes AJAX
+## To develop
+
+### A réfléchir :
+- Quand une carte est crée, comment faire pour pouvoir la créer sans y associer une sous-catégorie ?
+
+### Fonctionnalités
+
+- [ ] La partie card est réservée aux utilisateurs inscrits
+- [ ] Si on arrive sur la partie card de manière anonyme, on est renvoyé vers un utilisateur spécial
+  - [ ] Trouver une charte graphique montrant qu'on est bien un utilisateur anonyme
+  - [ ] Faire des renvois réguliers vers l'inscription
 
 
-- Gérer la modal
+### Design
+
+*Quand une écriture ouun bouton est en orange, il faut pouvoir clicker dessus*
+
+- [ ] Quand on passe sur les icones, le curseur devient une main
+- [ ] Faire un width-max sur les cards
+- [ ] Refaire la page d'inscription // de Login
+- [ ] Page d'accueil
 
 
-## Indispensables
+### Divers non-urgent
 
-- Les modifier, les supprimer
-  - D'abord une à la fois
+- [ ] Changer toutes les requêtes dans vers les repository par une requête findBy
+  - [ ] Comprendre comment fonctionne la fonction findBy
