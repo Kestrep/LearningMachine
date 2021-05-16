@@ -2,7 +2,25 @@ mot de passe : pass
 
 # Right Now
 
-- [ ] Dans la page création, avoir un bouton DEBUG qui, quand on clicke dessus, permet de mettre dans le pièce papier un lorem de la taille voulue
+- [ ] Créer un standard de police - standards.md
+  - [ ] Avec les normes JS / Html-class
+  - [ ] Entité, Controllers etc...
+
+- [ ] Travailler sur les entités
+  - [ ] Ajouter le User à la carte
+  - [ ] Ajouter une description aux Catégories / Sous-catégories
+  - [ ] Ajouter un last-modified aux Catégories / Sous-catégories
+- Ajouter le User à la carte ?
+- 
+
+- [ ] Refaire les fixtures
+  - [ ] Moins d'users
+  - [ ] Ajouter des numérotations 
+
+- [ ] Ajouter le système d'autocomplétion de la catégorie / Sous-catégorie
+  - [ ] Complétion automatique avec la dernière sous-catégorie utilisée
+
+
 
 - [ ] Modification d'une card
   - [ ] Ajouter un champs 'dernière modification le...
