@@ -21,15 +21,15 @@ function handleCard() {
         initialY = e.clientY
         initiate = true
 
-        console.log('DOWN || relative : ' + Math.abs(relativeX) + ' | client : ' + e.clientX + ' | initial : ' + initialX)
+        // console.log('DOWN || relative : ' + Math.abs(relativeX) + ' | client : ' + e.clientX + ' | initial : ' + initialX)
     });
 
     currentCard.addEventListener('mousemove', e => {
-        if(initiate) {
-            relativeX = e.clientX-initialX
-            relativeY = e.clientY-initialY
-            
-            if(Math.abs(relativeX) < littleThreshold) {
+        if (initiate) {
+            relativeX = e.clientX - initialX
+            relativeY = e.clientY - initialY
+
+            if (Math.abs(relativeX) < littleThreshold) {
                 translateX = relativeX
                 translateY = relativeY
                 rotatePercent = 0
@@ -42,19 +42,19 @@ function handleCard() {
             currentCard.style.transform = `translate(${translateX}px, ${translateY}px) rotateZ(${rotatePercent * 45}deg)`
         }
 
-        console.log('MOVE || relative : ' + Math.abs(relativeX) + ' | client : ' + e.clientX + ' | initial : ' + initialX)
-        
+        // console.log('MOVE || relative : ' + Math.abs(relativeX) + ' | client : ' + e.clientX + ' | initial : ' + initialX)
+
     })
 
     document.addEventListener('mouseup', e => {
         initiate = false
 
         // Restore if threshold passed
-        if(Math.abs(relativeX) < middleThreshold) {
+        if (Math.abs(relativeX) < middleThreshold) {
             currentCard.style.transform = `translate(${0}px, ${0}px)`
         } else {
             /* relativeX = e.clientX - initialX */
-            console.log('UP || relative : ' + Math.abs(relativeX) + ' | client : ' + e.clientX + ' | initial : ' + initialX)
+            // console.log('UP || relative : ' + Math.abs(relativeX) + ' | client : ' + e.clientX + ' | initial : ' + initialX)
             currentCard.style.transform = `translate(${(relativeX / Math.abs(relativeX) * 100)}vw, ${0}px) rotateZ(0)`
         }
     })

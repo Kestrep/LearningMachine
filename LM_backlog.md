@@ -2,21 +2,10 @@ mot de passe : pass
 
 # Right Now
 
-- [ ] Créer un standard de police - standards.md
-  - [ ] Avec les normes JS / Html-class
-  - [ ] Entité, Controllers etc...
-
-- [ ] Travailler sur les entités
-  - [ ] Ajouter le User à la carte
-  - [ ] Ajouter une description aux Catégories / Sous-catégories
-  - [ ] Ajouter un last-modified aux Catégories / Sous-catégories
-- Ajouter le User à la carte ?
-- 
-
-- [ ] Refaire les fixtures
-  - [ ] Moins d'users
-  - [ ] Ajouter des numérotations 
-  - [ ] Cat/SsCat ==> Ajouter UpdatedAt // Description // CreatedAt
+- [ ] Faire les requêtes AJAX !!
+  - [ ] Quand on arrive sur play, demander 20 cards
+  - [ ] Faire un sérializer
+  - [ ] Envoyer une requête d'update avec un bouton debug -- recevoir une réponse
 
 - [ ] Ajouter le système d'autocomplétion de la catégorie / Sous-catégorie
   - [ ] Complétion automatique avec la dernière sous-catégorie utilisée
@@ -29,6 +18,9 @@ mot de passe : pass
     - [ ] En requête, donc un minimum d'information pour pouvoir faire l'effet
     - [ ] vérifier que les anciennes catégories ont déjà été supprimées
 
+- [ ] Travailler sur les entités
+  - [ ] Ajouter le User à la carte
+- Ajouter le User à la carte ?
 # Backlog
 
 

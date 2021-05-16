@@ -2,6 +2,8 @@
  * Debug Button for the creation page, where you can select the number of words and copy it into clipboard
  */
 export default function debugButtons() {
+    // ? Comment faire un truc plus propre ?
+    if (document.querySelector('.debug .loremCopy-Button') == null) return false
     const loremCopyButton = document.querySelector('.debug .loremCopy-Button')
     const loremCopyWordCount = document.querySelector(`#${loremCopyButton.dataset.count}`);
 

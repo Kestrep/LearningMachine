@@ -29,6 +29,14 @@ class CardController extends AbstractController
     }
 
     /**
+     * @Route("/ajax", name="ajax_get", methods={"GET"})
+     */
+    public function ajax(CardRepository $cardRepository, EntityManagerInterface $em): Response
+    {
+        return $this->json($cardRepository->findUserCards(), 200, [], ['groups' => 'card:read']);
+    }
+
+    /**
      * @Route("/play", name="card_play", methods={"GET"})
      */
     public function play(CardRepository $cardRepository): Response

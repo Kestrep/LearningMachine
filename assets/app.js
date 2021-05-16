@@ -10,9 +10,16 @@ import './app.scss';
 
 import handleBurger from './js/burger';
 import debugButtons from './js/debug';
+import ajaxButton from './js/ajax';
+import ajaxRequests from './js/ajax';
 
 handleBurger()
-debugButtons()
+
+
+window.addEventListener('load', function() {
+    debugButtons()
+    ajaxRequests()
+})
 
 // start the Stimulus application
 // import './bootstrap';

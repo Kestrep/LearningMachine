@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CardRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CardRepository::class)
@@ -24,6 +25,7 @@ class Card
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("card:read")
      */
     private $frontMainContent;
 
@@ -34,6 +36,7 @@ class Card
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("card:read")
      */
     private $backMainContent;
 
