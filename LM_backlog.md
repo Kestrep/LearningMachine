@@ -16,6 +16,7 @@ mot de passe : pass
 - [ ] Refaire les fixtures
   - [ ] Moins d'users
   - [ ] Ajouter des numérotations 
+  - [ ] Cat/SsCat ==> Ajouter UpdatedAt // Description // CreatedAt
 
 - [ ] Ajouter le système d'autocomplétion de la catégorie / Sous-catégorie
   - [ ] Complétion automatique avec la dernière sous-catégorie utilisée
@@ -50,6 +51,7 @@ mot de passe : pass
 *Quand une écriture ouun bouton est en orange, il faut pouvoir clicker dessus*
 
 - [ ] Quand on passe sur les icones, le curseur devient une main
+- [ ] Voir pourquoi il y a un overflow-x
 - [ ] Faire un width-max sur les cards
 - [ ] Refaire la page d'inscription // de Login
 - [ ] Page d'accueil

@@ -20,37 +20,37 @@ class Card
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $front_main_content;
+    private $frontMainContent;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $front_subcontent;
+    private $frontSubcontent;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $back_main_content;
+    private $backMainContent;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $back_subcontent;
+    private $backSubcontent;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $front_clue;
+    private $frontClue;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $back_clue;
+    private $backClue;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -74,84 +74,84 @@ class Card
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getFrontMainContent(): ?string
     {
-        return $this->front_main_content;
+        return $this->frontMainContent;
     }
 
-    public function setFrontMainContent(?string $front_main_content): self
+    public function setFrontMainContent(?string $frontMainContent): self
     {
-        $this->front_main_content = $front_main_content;
+        $this->frontMainContent = $frontMainContent;
 
         return $this;
     }
 
     public function getFrontSubcontent(): ?string
     {
-        return $this->front_subcontent;
+        return $this->frontSubcontent;
     }
 
-    public function setFrontSubcontent(?string $front_subcontent): self
+    public function setFrontSubcontent(?string $frontSubcontent): self
     {
-        $this->front_subcontent = $front_subcontent;
+        $this->frontSubcontent = $frontSubcontent;
 
         return $this;
     }
 
     public function getBackMainContent(): ?string
     {
-        return $this->back_main_content;
+        return $this->backMainContent;
     }
 
-    public function setBackMainContent(?string $back_main_content): self
+    public function setBackMainContent(?string $backMainContent): self
     {
-        $this->back_main_content = $back_main_content;
+        $this->backMainContent = $backMainContent;
 
         return $this;
     }
 
     public function getBackSubcontent(): ?string
     {
-        return $this->back_subcontent;
+        return $this->backSubcontent;
     }
 
-    public function setBackSubcontent(?string $back_subcontent): self
+    public function setBackSubcontent(?string $backSubcontent): self
     {
-        $this->back_subcontent = $back_subcontent;
+        $this->backSubcontent = $backSubcontent;
 
         return $this;
     }
 
     public function getFrontClue(): ?string
     {
-        return $this->front_clue;
+        return $this->frontClue;
     }
 
-    public function setFrontClue(?string $front_clue): self
+    public function setFrontClue(?string $frontClue): self
     {
-        $this->front_clue = $front_clue;
+        $this->frontClue = $frontClue;
 
         return $this;
     }
 
     public function getBackClue(): ?string
     {
-        return $this->back_clue;
+        return $this->backClue;
     }
 
-    public function setBackClue(?string $back_clue): self
+    public function setBackClue(?string $backClue): self
     {
-        $this->back_clue = $back_clue;
+        $this->backClue = $backClue;
 
         return $this;
     }
