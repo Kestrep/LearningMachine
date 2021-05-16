@@ -36,7 +36,7 @@ class CardRepository extends ServiceEntityRepository
                     ->setParameter('user', $this->user)
                     // ->setFirstResult(50)
                     ->setMaxResults(15)
-                    ->orderBy('c.created_at', 'ASC')
+                    ->orderBy('c.createdAt', 'ASC')
                     ->getQuery()
                     ->getResult()
                     ;

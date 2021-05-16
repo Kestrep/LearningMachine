@@ -27,11 +27,12 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         // Génération des utilisateurs
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $user = new User();
 
+            $email = $i ===0 ? 'aa@aa.aa' : "user {$i}";
             $user
-                ->setEmail($faker->email())
+                ->setEmail($email)
                 ->setRoles(['ROLE_USER'])
                 ->setFirstname($faker->firstName())
                 ->setLastname($faker->lastName())
@@ -39,19 +40,29 @@ class AppFixtures extends Fixture
                 ->setLastConnectionAt($faker->dateTimeBetween('-1 week', 'now'))
                 ->setPassword($this->passwordEncoder->encodePassword($user, 'pass'));
 
-            for ($j=0; $j < mt_rand(1,3); $j++) { 
+            for ($j=0; $j < mt_rand(1,2); $j++) { 
                 $category = new Category();
 
-                $category->setName($faker->word());
+                $category
+                    ->setName("category{$i} {$faker->word()}")
+                    ->setDescription($faker->sentence(9))
+                    ->setCreatedAt(new \DateTime())
+                    ->setUpdatedAt(new \DateTime())
+                    ;
                 $user->addCategory($category);
 
                 for ($k=0; $k < mt_rand(1, 3); $k++) { 
                     $subCategory = new SubCategory();
 
-                    $subCategory->setName($faker->word());
+                    $subCategory
+                        ->setName("subCat{$i} {$faker->word()}")
+                        ->setDescription($faker->sentence(9))
+                        ->setCreatedAt(new \DateTime())
+                        ->setUpdatedAt(new \DateTime())
+                        ;
                     $category->addSubCategory($subCategory);
 
-                    for ($l = 0; $l < mt_rand(3, 7); $l++) {
+                    for ($l = 0; $l < mt_rand(2, 5); $l++) {
                         $card = new Card();
             
                         $card
