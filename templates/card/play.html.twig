@@ -4,6 +4,7 @@
 
 {% block body %}
 <main class="play d-bc">
+    <!-- Header -->
     <section class="header d-bc">
         <div class="card-breadcrumb">
             <div class="domain"><div class="square"></div>Domaine</div>
@@ -15,7 +16,11 @@
         <div class="info-scroll">4 cartes apprises jusqu'à maintenant !</div>
 
     </section>
+
+    <!-- Main section -->
     <section class="main">
+
+        <!-- Playground -->
         <div class="playground-ctr stacked-cards">
             <nav class="card-menu active d-ee">
                 <div class="stage-icons d-ce">
@@ -44,14 +49,25 @@
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque non quasi unde veniam, dolores facere voluptatem error quis numquam sequi necessitatibus vitae eaque cumque maiores?
             </div>
         </div>
+        <!-- End of Playground -->
+        
     </section>
     <section class="footer">
     </section>
 
+
     <div class="debug">
             <div class="btn-orange restore-button">Restore</div>
             <div class="btn-orange request-button">Send Request</div>
+
+            {# <div class="card-side front moving-card">
+                <div class="content d-cc">
+                    <div class="main-ctnt">Lorem ipsum dolor sit amet.</div>
+                    <div class="sub-ctnt">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</div>
+                </div>
+            </div> #}
     </div>
+
 </main>
     
 {% endblock %}

@@ -18,7 +18,7 @@ handleBurger()
 
 window.addEventListener('load', function() {
     debugButtons()
-    ajaxRequests()
+        // ajaxRequests()
 })
 
 // start the Stimulus application

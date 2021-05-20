@@ -2,10 +2,6 @@ mot de passe : pass
 
 # Right Now
 
-- [ ] Faire les requêtes AJAX !!
-  - [ ] Quand on arrive sur play, demander 20 cards
-  - [ ] Faire un sérializer
-  - [ ] Envoyer une requête d'update avec un bouton debug -- recevoir une réponse
 
 - [ ] Ajouter le système d'autocomplétion de la catégorie / Sous-catégorie
   - [ ] Complétion automatique avec la dernière sous-catégorie utilisée
@@ -21,6 +17,26 @@ mot de passe : pass
 - [ ] Travailler sur les entités
   - [ ] Ajouter le User à la carte
 - Ajouter le User à la carte ?
+
+## Fonctionnement du javascript lorsqu'on jour
+*On repère les cards avec leur id*
+
+- Quand on arrive sur la page play
+- Il y a une requête ajax qui va récupérer une vingtaine de cartes
+- On a une variable qui stocke l'ensemble des cartes téléchargées **cardsArray**
+- On initie
+  - On récupère le contenu html du playground dans une variable
+  - On update l'ensemble des données avec la première carte
+  - On joue
+  - Quand on termine, on exécute une fonction de fin de jeu
+    - Avec l'update AJAX (pour augmenter le niveau ou autre)
+      - Si carte apprise, alors on supprime l'objet du **cardsArray**
+    - Pour replacer l'objet courant dans la liste des objets un peu plus loin
+
+
+!! Il me faut un point d'appui où le jeu s'arrête !! -- Ca peut se faire via un addEventListener => Quand on bouge la carte par exemple
+
+
 # Backlog
 
 
