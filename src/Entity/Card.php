@@ -15,6 +15,7 @@ class Card
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("card:read")
      */
     private $id;
 
@@ -31,6 +32,7 @@ class Card
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("card:read")
      */
     private $frontSubcontent;
 
@@ -62,6 +64,7 @@ class Card
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("card:read")
      */
     private $stage;
 

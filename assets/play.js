@@ -1,5 +1,3 @@
-// import handleCard from './js/handleCard'
-// handleCard()
 /*
 playStep :
 1 = First visit
@@ -25,27 +23,33 @@ function setCurrentPlayingCardObject(cardObject) {
 /**
  * Avec le bouton debug, va chercher un lot de carte et en rempli le deck
  */
-function getCardsWithAjax() {
+function getCardsWithAjaxDebug() {
     // Si bouton de debug, on fait une requête AJAX avec le bouton debug
-    if (document.querySelector('.request-button') != null) {
-        document.querySelector('.request-button').addEventListener("click", () => {
+    if (document.querySelector('.request-fulldeck-button') != null) {
+        document.querySelector('.request-fulldeck-button').addEventListener("click", () => {
             fetch('http://127.0.0.1:8000/card/ajax').then(response => response.json()).then(data => {
                 deck = data;
                 setCurrentPlayingCardObject(deck[0])
             })
         })
     }
-}
 
-/**
- * 
- */
-function updateCardAJAX() {
-    console.log('La carte est updaté dans la base de donnée')
-}
-
-function getANewCard() {
-    console.log('Une carte est ajoutée à la base de donnée')
+    if (document.querySelector('.request-update-button') != null) {
+        document.querySelectorAll('.request-update-button').forEach(element => {
+            element.addEventListener("click", e => {
+                let cardID = currentPlayingCardObject ? currentPlayingCardObject.id : null
+                console.log(cardID)
+                let data = {
+                    "id": cardID,
+                    "stage": element.dataset.stage
+                }
+                fetch('http://127.0.0.1:8000/card/ajax/update', {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                }).then(result => result.json()).then(response => console.log(response))
+            })
+        })
+    }
 }
 
 
@@ -86,8 +90,10 @@ function updateCard(currentPlayingCardObject) {
         replaceCard(7)
     } else if (currentPlayingCardObject.playStep === 3) {
         currentPlayingCardObject.playStep = 4
-        updateCardAJAX()
-        getANewCard()
+            // Update la carte présente
+
+        // récupère une nouvelle carte et l'insère dans le deck
+
     }
 
     console.log('La carte est passé au stage ' + currentPlayingCardObject.playStep)
@@ -130,4 +136,4 @@ function playCycle(currentPlayingCardObject) {
     document.querySelector('section.main').appendChild(currentHtmlCard)
 }
 
-getCardsWithAjax()
+getCardsWithAjaxDebug()

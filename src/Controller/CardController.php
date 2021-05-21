@@ -37,6 +37,35 @@ class CardController extends AbstractController
     }
 
     /**
+     * @Route("/ajax/update", name="ajax_update", methods={"POST"})
+     */
+    public function update(CardRepository $cardRepository, EntityManagerInterface $em, Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        
+        $cardStage = $data['stage'];
+
+        $card = $cardRepository->find($data['id']);
+
+        $currentStage = $card->getStage();
+        if($data['stage'] === 'up') {
+            $card->setStage($currentStage + 1);
+            $message = "Une carte apprise !!!";
+        } else if ($data['stage'] === 'down') {
+            $card->setStage($currentStage - 1);
+            $message = "On va faire descendre la pression !";
+        }
+        
+        $em->persist($card);
+        $em->flush();
+
+
+        // dd($cardRepository->find(3));
+
+        return $this->json($$message, 201, [], ['groups' => 'card:read']);
+    }
+
+    /**
      * @Route("/play", name="card_play", methods={"GET"})
      */
     public function play(CardRepository $cardRepository): Response

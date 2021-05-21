@@ -3,45 +3,27 @@ $orange: #FE5900;
 $lightgrey: #ECEEED;
 $white: #FFFFFF;
 $darkgrey: #424C4E;
-
-
 $black: #171B1C;
 $green: #33B312;
 $red: #BF0404;
-
-$breakpoints: (
-    xl: 1240,
-    lg: 1024,
-    md: 760,
-    sm: 560,
-    xs: 480
-);
-
+$breakpoints: ( xl: 1240, lg: 1024, md: 760, sm: 560, xs: 480);
 $gutter: 1rem;
 $separation_number: 4; // Define the number of columns used in the application
-
 // Components variables
 $footer-size: 20px;
-
-
 // The utilities
 @import "./fonts/fonts.scss";
 @import "./icons/icons.scss";
 @import "./scss-utilities/breakpoints.scss";
 @import "./scss-utilities/fast-template.scss";
-
-
 // The components
 @import "./scss-components/debug.scss";
-
 @import "./scss-components/header.scss";
 @import "./scss-components/burger.scss";
 @import "./scss-components/buttons.scss";
 @import "./scss-components/text.scss";
 @import "./scss-components/screen-menu.scss";
 @import "./scss-components/flashcard.scss";
-
-
 // The page's templates (Layouts)
 @import "./scss-templates/normalize.scss";
 @import "./scss-templates/play.scss";
