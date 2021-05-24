@@ -27,13 +27,13 @@ class CardType extends AbstractType
                 'choices' => $this->subCategoryRepository->findAllFromCurrentUser(),
                 'choice_label' => 'name'
             ])
-            ->add('front_maincontent', TextareaType::class)
-            ->add('front_subcontent', TextareaType::class)
-            ->add('back_main_content', TextareaType::class)
-            ->add('back_subcontent', TextareaType::class)
-            ->add('front_clue', TextareaType::class)
-            ->add('back_clue', TextareaType::class)
-            ->add('note', TextareaType::class)
+            ->add('front_maincontent', TextareaType::class, ['required' => false])
+            ->add('front_subcontent', TextareaType::class, ['required' => false])
+            ->add('back_main_content', TextareaType::class, ['required' => false])
+            ->add('back_subcontent', TextareaType::class, ['required' => false])
+            ->add('front_clue', TextareaType::class, ['required' => false])
+            ->add('back_clue', TextareaType::class, ['required' => false])
+            ->add('note', TextareaType::class, ['required' => false])
         ;
     }
 

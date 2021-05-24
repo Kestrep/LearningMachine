@@ -2,11 +2,12 @@
     {{ form_widget(form) }}
         <div class="buttons d-cc">
             <div class="btn-darkgrey">Revenir</div>
-            <button class="btn-orange">{{ button_label|default('Save') }}</button>
+            <button class="btn-orange submit-button">{{ button_label|default('Save') }}</button>
         </div>
 {{ form_end(form) }}
 
 <div class="debug">
     <input type="text" name="" id="loremCopy-WordsCount" value="52">
     <div class="btn-orange loremCopy-Button" data-count="loremCopy-WordsCount">Copie Lorem</div>
+    <div class="btn-orange request-new-button">New Card</div>
 </div>

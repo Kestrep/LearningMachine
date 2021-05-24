@@ -27,4 +27,19 @@ export default function debugButtons() {
             /* clipboard write failed */
         });
     })
+
+    const url = 'http://127.0.0.1:8000/card/new/ajax'
+    const form = document.querySelector('form')
+    if (!form) return
+
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+
+        const formData = new FormData(form)
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        }).then(result => console.log(result))
+    })
+
 }

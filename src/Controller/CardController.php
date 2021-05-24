@@ -80,8 +80,35 @@ class CardController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $em): Response
     {
+        // dd($request->getContent());
         $card = new Card();
         $form = $this->createForm(CardType::class, $card);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $card->setCreatedAt(new \DateTime);
+            $card->setStage(2);
+            $em->persist($card);
+            $em->flush();
+
+            return $this->redirectToRoute('card_index');
+        }
+
+        return $this->render('card/new.html.twig', [
+            'card' => $card,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/new/ajax", name="card_new_ajax", methods={"POST"})
+     */
+    public function newAJAX(Request $request, EntityManagerInterface $em): Response
+    {
+        $card = new Card();
+        $form = $this->createForm(CardType::class, $card);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -91,7 +118,8 @@ class CardController extends AbstractController
             $em->persist($card);
             $em->flush();
 
-            return $this->redirectToRoute('card_index');
+            dump($card);
+            return $this->json("Alles Clar", 201);
         }
 
         return $this->render('card/new.html.twig', [
