@@ -30,7 +30,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 4; $i++) {
             $user = new User();
 
-            $email = $i ===0 ? 'aa@aa.aa' : "user {$i}";
+            $email = $i ===0 ? 'aa@aa.aa' : "user n{$i}";
             $user
                 ->setEmail($email)
                 ->setRoles(['ROLE_USER'])
@@ -44,7 +44,7 @@ class AppFixtures extends Fixture
                 $category = new Category();
 
                 $category
-                    ->setName("category{$i} {$faker->word()}")
+                    ->setName("cat°{$j} user°{$i}")
                     ->setDescription($faker->sentence(9))
                     ->setCreatedAt(new \DateTime())
                     ->setUpdatedAt(new \DateTime())
@@ -55,7 +55,7 @@ class AppFixtures extends Fixture
                     $subCategory = new SubCategory();
 
                     $subCategory
-                        ->setName("subCat{$i} {$faker->word()}")
+                        ->setName("subCat°{$k} cat°{$j} user°{$i}")
                         ->setDescription($faker->sentence(9))
                         ->setCreatedAt(new \DateTime())
                         ->setUpdatedAt(new \DateTime())

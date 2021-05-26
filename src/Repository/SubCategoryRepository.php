@@ -40,6 +40,46 @@ class SubCategoryRepository extends ServiceEntityRepository
         return $query;
     }
 
+    /**
+     * @return Category Returns the last category from the current user
+     */
+    public function findAllFromGivenCategoryFromCurrentUser($category) {
+        $query = $this
+                    ->createQueryBuilder('s')
+                    ->join('s.category', 'cat')
+                    ->join('cat.user', 'u')
+                    ->where('u = :user')
+                    ->andWhere('cat = :category')
+                    ->setParameter('user', $this->currentUser)
+                    ->setParameter('category', $category)
+                    ->setMaxResults(1)
+                    ->orderBy('s.updatedAt', 'DESC')
+                    ->getQuery()
+                    ->getResult()
+                    ;
+        return $query;
+    }
+
+    /**
+     * @return Category Returns the last category from the current user
+     */
+    public function findLastSubCategoryFromGivenCategoryFromCurrentUser($category) {
+        $query = $this
+                    ->createQueryBuilder('s')
+                    ->join('s.category', 'cat')
+                    ->join('cat.user', 'u')
+                    ->where('u = :user')
+                    ->andWhere('cat = :category')
+                    ->setParameter('user', $this->currentUser)
+                    ->setParameter('category', $category)
+                    ->setMaxResults(1)
+                    ->orderBy('s.updatedAt', 'DESC')
+                    ->getQuery()
+                    ->getSingleResult()
+                    ;
+        return $query;
+    }
+
     // /**
     //  * @return SubCategory[] Returns an array of SubCategory objects
     //  */

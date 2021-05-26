@@ -2,9 +2,32 @@ mot de passe : pass
 
 # Right Now
 
-
 - [ ] Ajouter le système d'autocomplétion de la catégorie / Sous-catégorie
   - [ ] Complétion automatique avec la dernière sous-catégorie utilisée
+
+
+LA CE QUE JE VEUX FAIRE ::
+- Nouvelle card :
+  - Les champs subcat correspondent à la catégorie utilisée
+
+
+Dans la page new :
+
+Avoir un bouton : créer une cat//subcat supplémentaire à côté du label (orange)
+Chercher le dernier updatedAt des sous-catégories, remplir le catégorie relatif
+
+Quand Je change de catégorie, mon sélect change avec
+// Et donc, quand j'enregistre un nouveau subcategory, ça rajoute la catégorie ? HasLifeCycleCallback
+
+
+Avoir une option supplémentaire :: créer une nouvelle cat//subCat
+
+
+
+
+
+
+Système avec trasnformation du select en input field
 
 
 

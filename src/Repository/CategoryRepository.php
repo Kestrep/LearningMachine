@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @method Category|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +15,44 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $currentUser;
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
+        $this->currentUser = $security->getUser();
         parent::__construct($registry, Category::class);
+    }
+
+    /**
+     * @return Category[] Returns an array of SubCategory owned by the current user
+     */
+    public function findAllFromCurrentUser() {
+        $query = $this
+                    ->createQueryBuilder('c')
+                    ->join('c.user', 'u')
+                    ->where('u = :user')
+                    ->setParameter('user', $this->currentUser)
+                    ->setMaxResults(5)
+                    ->orderBy('c.updatedAt', 'DESC')
+                    ->getQuery()
+                    ->getResult()
+                    ;
+        return $query;
+    }
+    /**
+     * @return Category Returns the last category from the current user
+     */
+    public function findLastCategoryFromUser() {
+        $query = $this
+                    ->createQueryBuilder('c')
+                    ->join('c.user', 'u')
+                    ->where('u = :user')
+                    ->setParameter('user', $this->currentUser)
+                    ->setMaxResults(1)
+                    ->orderBy('c.updatedAt', 'DESC')
+                    ->getQuery()
+                    ->getSingleResult()
+                    ;
+        return $query;
     }
 
     // /**
