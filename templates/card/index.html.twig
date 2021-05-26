@@ -10,12 +10,17 @@
         </div>
     </section>
     <section class="main">
+        {% set subcategory = "" %}
+        {% set category = "" %}
         {% for card in cards %}
-            {% if card.id is divisible by(3) or card.id is divisible by(7) %}
+
+            {% if card.subcategory.id != subcategory %}
                 <div class="card-breadcrumb">
                     <div class="domain"><div class="square"></div>{{ card.subcategory.category.name }}</div>
                     <div class="subdomain"><div class="square"></div>{{ card.subcategory.name }}</div>
                 </div>
+                {% set subcategory = card.subcategory.id %}
+                {% set category = card.subcategory.category.id %}
             {% endif %}
 
             <div class="card-side">

@@ -90,7 +90,7 @@ class CardController extends AbstractController
             $card->setCreatedAt(new \DateTime);
             $card->setStage(2);
             $em->persist($card);
-            // $em->flush();
+            $em->flush();
 
             return $this->redirectToRoute('card_index');
         }
