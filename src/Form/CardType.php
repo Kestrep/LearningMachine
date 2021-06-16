@@ -31,25 +31,19 @@ class CardType extends AbstractType
         $builder
             ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choices' => $this->categoryRepository->findAllFromCurrentUser(),
-                'choice_label' => 'name',
-                'mapped' => false,
-                'data' => $this->categoryRepository->findLastCategoryFromUser()
             ])
             ->add('subCategory', EntityType::class, [
                 'class' => SubCategory::class,
                 'choice_label' => 'name'
             ])
-            ->add('front_maincontent', TextareaType::class, ['required' => false])
-            ->add('front_subcontent', TextareaType::class, ['required' => false])
-            ->add('back_main_content', TextareaType::class, ['required' => false])
-            ->add('back_subcontent', TextareaType::class, ['required' => false])
-            ->add('front_clue', TextareaType::class, ['required' => false])
-            ->add('back_clue', TextareaType::class, ['required' => false])
-            ->add('note', TextareaType::class, ['required' => false])
+            ->add('front_maincontent', TextareaType::class)
+            ->add('front_subcontent', TextareaType::class)
+            ->add('back_main_content', TextareaType::class)
+            ->add('back_subcontent', TextareaType::class)
+            ->add('front_clue', TextareaType::class)
+            ->add('back_clue', TextareaType::class)
+            ->add('note', TextareaType::class)
         ;
-
-        // Just after submitting a card, set the correct subcategory
         $builder->get('category')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
             $category = $event->getData();
             $form = $event->getForm()->getParent();
@@ -62,12 +56,21 @@ class CardType extends AbstractType
 
         });
 
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
-            // Si il y a une carte, on fait correspndre la sous-categorie, sinon on intiie les sous-categories relative à la categorie
-            //$category = $event->getData()->getSubcategory()->getCategory();
-            
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $form = $event->getForm();
-            
+            $card = $event->getData();
+            $form->add('category', EntityType::class, [
+                'class' => Category::class,
+                // On veut les catégories par ordre alphabétique, mais que ce soit la dernière catégorie qui soit automatiquement sélectionnée
+                'choices' => $this->categoryRepository->findAllFromCurrentUser(),
+                'choice_label' => 'name',
+                'mapped' => false,
+                'data' => $card->getSubcategory() !== null ? $card->getSubcategory()->getCategory() : $this->categoryRepository->findLastCategoryFromUser()
+            ]);
+        });
+
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {            
+            $form = $event->getForm();
 
             $form->add('subCategory', EntityType::class, [
                 'class' => SubCategory::class,
@@ -75,40 +78,6 @@ class CardType extends AbstractType
                 'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($form->get('category')->getData()),
             ]);
         });
-        
-        /*
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function(FormEvent $event) {
-                $form = $event->getForm();
-                $card = $event->getData();
-                $category = [];
-                $categoryFormData = $form->get('category')->getData();
-
-                dump($categoryFormData, $card);
-
-                $form->add('subCategory', EntityType::class, [
-                    'class' => SubCategory::class,
-                    'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($categoryFormData),
-                    'choice_label' => 'name'
-                ]);
-            }
-        );
-
-        $builder->get('subCategory')->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) {
-            $form = $event->getForm()->getParent();
-            $data = $event->getForm()->getData(); // $form->getParent()->get('category')->getConfig()->getOption('data');
-
-            dd($data);
-
-            $form->add('subCategory', EntityType::class, [
-                'class' => SubCategory::class,
-                'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($data),
-                'choice_label' => 'name'
-            ]);
-
-        });
-        */
     }
 
     public function configureOptions(OptionsResolver $resolver)
