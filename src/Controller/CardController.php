@@ -84,10 +84,16 @@ class CardController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $card->setCreatedAt(new \DateTime);
             $card->setStage(2);
-            $em->persist($card);
+
+            $subCategory = $card->getSubCategory();
+            $category = $subCategory->getCategory();
+            
+            $card->setCreatedAt(new \DateTime);
+            $subCategory->setUpdatedAt(new \DateTime);
+            $category->setUpdatedAt(new \DateTime);
+            
+            $em->persist($card, $subCategory, $category);
             $em->flush();
 
             if($request->isXmlHttpRequest()) {
