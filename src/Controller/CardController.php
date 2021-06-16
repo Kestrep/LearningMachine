@@ -73,27 +73,62 @@ class CardController extends AbstractController
             'cards' => $cardRepository->findAll(),
         ]);
     }
+    
+
+    // ! @Security("post.isAuthor(user)") dans https://symfony.com/doc/4.2/best_practices/security.html
+
+    // TODO: Delete
+    /**
+     * @Route("/{id}/edite", name="card_edite", methods={"GET","POST"})
+     * @Security("user === card.getSubCategory().getCategory().getUser()", message="Cette annonce ne vous appartient pas")
+     */
+    public function edit(Request $request, Card $card): Response
+    {
+        $form = $this->createForm(CardType::class, $card);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('card_index');
+        }
+
+        return $this->render('card/edit.html.twig', [
+            'card' => $card,
+            'form' => $form->createView(),
+        ]);
+    }
 
     /**
      * @Route("/new", name="card_new", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="card_edit", methods={"GET","POST"})
+     * 
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, Card $card = null, EntityManagerInterface $em): Response
     {
-        $card = new Card();
+        // If new, create a new Card
+        if(!$card) {
+            $card = new Card();
+        }
         $form = $this->createForm(CardType::class, $card);
         $form->handleRequest($request);
         
+        // Form submitting
         if ($form->isSubmitted() && $form->isValid()) {
             $card->setStage(2);
-
-            $subCategory = $card->getSubCategory();
-            $category = $subCategory->getCategory();
-            
             $card->setCreatedAt(new \DateTime);
-            $subCategory->setUpdatedAt(new \DateTime);
-            $category->setUpdatedAt(new \DateTime);
+
+            if($card->getID() !== null) {
+                $subCategory = $card->getSubCategory();
+                $category = $subCategory->getCategory();
+                
+                $subCategory->setUpdatedAt(new \DateTime);
+                $category->setUpdatedAt(new \DateTime);
+
+                $em->persist($subCategory, $category);
+            }
             
-            $em->persist($card, $subCategory, $category);
+            $em->persist($card);
             $em->flush();
 
             if($request->isXmlHttpRequest()) {
@@ -102,10 +137,20 @@ class CardController extends AbstractController
             return $this->redirectToRoute('card_index');
         }
 
-        return $this->render('card/new.html.twig', [
-            'card' => $card,
-            'form' => $form->createView(),
-        ]);
+        if($card->getID() !== null) {
+            // Form render if modifying
+            return $this->render('card/edit.html.twig', [
+                'card' => $card,
+                'form' => $form->createView(),
+            ]);
+        } else {
+            // Form render if new
+            return $this->render('card/new.html.twig', [
+                'card' => $card,
+                'form' => $form->createView(),
+            ]);
+        }
+        
     }
 
     /**
@@ -125,27 +170,6 @@ class CardController extends AbstractController
     {
         return $this->render('card/show.html.twig', [
             'card' => $card,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="card_edit", methods={"GET","POST"})
-     * @Security("user === card.getSubCategory().getCategory().getUser()", message="Cette annonce ne vous appartient pas")
-     */
-    public function edit(Request $request, Card $card): Response
-    {
-        $form = $this->createForm(CardType::class, $card);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('card_index');
-        }
-
-        return $this->render('card/edit.html.twig', [
-            'card' => $card,
-            'form' => $form->createView(),
         ]);
     }
 

@@ -31,7 +31,7 @@
                         <i class="icon-star-empty"></i>
                     </div>
                     <div class="edit-icons d-cc"><i class="icon-closed-eye"></i></div>
-                    <div class="edit-icons d-cc"><i class="icon-feather"></i></div>
+                    <a href="{{ path('card_edit', {'id': card.id}) }}" class="edit-icons d-cc"><i class="icon-feather"></i></a>
                 </nav>
                 <div class="front-ctnt">
                     <div class="main-ctnt">{{ card.frontMainContent}}</div>
