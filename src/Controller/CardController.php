@@ -61,9 +61,6 @@ class CardController extends AbstractController
         $em->persist($card);
         $em->flush();
 
-
-        // dd($cardRepository->find(3));
-
         return $this->json($message, 201, [], ['groups' => 'card:read']);
     }
 
