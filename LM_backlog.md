@@ -5,11 +5,18 @@ mot de passe : pass
 - [ ] Ajouter le système d'autocomplétion de la catégorie / Sous-catégorie
   - [ ] Complétion automatique avec la dernière sous-catégorie utilisée
 
+DEBUG BUTTONS :
+- Un système fixé en haut à gauche (sur le logo dont on a rien à foutre)
+- Les boutons sont plus petits, avec une lettre seulement, mais qui devient un mot quand on reste dessus quelques secondes (et tous les mots s'affiches quand on reste encore plus longtemps)
+
+
 
 LA CE QUE JE VEUX FAIRE ::
 - Nouvelle card :
   - Les champs subcat correspondent à la catégorie utilisée
 
+
+Créer bouton DEBUG pour avoir la possibilité d'activer ou non l'ajax
 
 Dans la page new :
 
@@ -24,7 +31,7 @@ Avoir une option supplémentaire :: créer une nouvelle cat//subCat
 
 
 
-
+- Checker l'apparition des domaines / sous-domaines dans l'index
 
 
 Système avec trasnformation du select en input field

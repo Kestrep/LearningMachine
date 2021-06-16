@@ -52,7 +52,7 @@ class SubCategoryRepository extends ServiceEntityRepository
                     ->andWhere('cat = :category')
                     ->setParameter('user', $this->currentUser)
                     ->setParameter('category', $category)
-                    ->setMaxResults(1)
+                    ->setMaxResults(20)
                     ->orderBy('s.updatedAt', 'DESC')
                     ->getQuery()
                     ->getResult()

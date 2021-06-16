@@ -9,6 +9,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\SubCategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,11 +35,9 @@ class CardType extends AbstractType
                 'choice_label' => 'name',
                 'mapped' => false,
                 'data' => $this->categoryRepository->findLastCategoryFromUser()
-                // 'data' => $this->categoryRepository->find(13)
             ])
             ->add('subCategory', EntityType::class, [
                 'class' => SubCategory::class,
-                'choices' => $this->subCategoryRepository->findAllFromCurrentUser(),
                 'choice_label' => 'name'
             ])
             ->add('front_maincontent', TextareaType::class, ['required' => false])
@@ -50,25 +49,73 @@ class CardType extends AbstractType
             ->add('note', TextareaType::class, ['required' => false])
         ;
 
-        $builder->get('subCategory')->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-            $form = $event->getForm();
-            $data = $form->getParent()->get('category')->getConfig()->getOption('data');
+        // Just after submitting a card, set the correct subcategory
+        $builder->get('category')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
+            $category = $event->getData();
+            $form = $event->getForm()->getParent();
 
-            $form->getParent()->add('subCategory', EntityType::class, [
+            $form->add('subCategory', EntityType::class, [
                 'class' => SubCategory::class,
-                'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($data),
-                'data' => $this->subCategoryRepository->findLastSubCategoryFromGivenCategoryFromCurrentUser($data),
+                'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($category),
                 'choice_label' => 'name'
             ]);
 
-            // dd($data);
         });
+
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
+            // Si il y a une carte, on fait correspndre la sous-categorie, sinon on intiie les sous-categories relative à la categorie
+            //$category = $event->getData()->getSubcategory()->getCategory();
+            
+            $form = $event->getForm();
+            
+
+            $form->add('subCategory', EntityType::class, [
+                'class' => SubCategory::class,
+                'choice_label' => 'name',
+                'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($form->get('category')->getData()),
+            ]);
+        });
+        
+        /*
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function(FormEvent $event) {
+                $form = $event->getForm();
+                $card = $event->getData();
+                $category = [];
+                $categoryFormData = $form->get('category')->getData();
+
+                dump($categoryFormData, $card);
+
+                $form->add('subCategory', EntityType::class, [
+                    'class' => SubCategory::class,
+                    'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($categoryFormData),
+                    'choice_label' => 'name'
+                ]);
+            }
+        );
+
+        $builder->get('subCategory')->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) {
+            $form = $event->getForm()->getParent();
+            $data = $event->getForm()->getData(); // $form->getParent()->get('category')->getConfig()->getOption('data');
+
+            dd($data);
+
+            $form->add('subCategory', EntityType::class, [
+                'class' => SubCategory::class,
+                'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($data),
+                'choice_label' => 'name'
+            ]);
+
+        });
+        */
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Card::class,
+            'csrf_protection' => false
         ]);
     }
 }

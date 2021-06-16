@@ -13,10 +13,8 @@ import debugButtons from './js/debug';
 
 handleBurger()
 
-
 window.addEventListener('load', function() {
     debugButtons()
-        // ajaxRequests()
 })
 
 // start the Stimulus application

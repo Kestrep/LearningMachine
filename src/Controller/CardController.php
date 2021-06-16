@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Card;
+use App\Entity\Category;
 use App\Form\CardType;
 use App\Repository\CardRepository;
+use App\Repository\SubCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +64,7 @@ class CardController extends AbstractController
 
         // dd($cardRepository->find(3));
 
-        return $this->json($$message, 201, [], ['groups' => 'card:read']);
+        return $this->json($message, 201, [], ['groups' => 'card:read']);
     }
 
     /**
@@ -80,7 +82,6 @@ class CardController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $em): Response
     {
-        // dd($request->getContent());
         $card = new Card();
         $form = $this->createForm(CardType::class, $card);
         $form->handleRequest($request);
@@ -92,6 +93,9 @@ class CardController extends AbstractController
             $em->persist($card);
             $em->flush();
 
+            if($request->isXmlHttpRequest()) {
+                return $this->json("Comme une lettre à la poste", 201);
+            };
             return $this->redirectToRoute('card_index');
         }
 
@@ -102,30 +106,13 @@ class CardController extends AbstractController
     }
 
     /**
-     * @Route("/new/ajax", name="card_new_ajax", methods={"POST"})
+     * @Route("/new/ajax/getSubCategory/{id}", name="card_new_ajax_subcategory", methods={"GET"})
      */
-    public function newAJAX(Request $request, EntityManagerInterface $em): Response
+    public function getSubCategoryFromCategory(Request $request, SubCategoryRepository $subCategoryRepository, Category $category) :Response
     {
-        $card = new Card();
-        $form = $this->createForm(CardType::class, $card);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $card->setCreatedAt(new \DateTime);
-            $card->setStage(2);
-            $em->persist($card);
-            $em->flush();
-
-            dump($card);
-            return $this->json("Alles Clar", 201);
-        }
-
-        return $this->render('card/new.html.twig', [
-            'card' => $card,
-            'form' => $form->createView(),
-        ]);
+        $subcategories = $subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($category);
+        
+        return $this->json($subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($category), 200, [], ['groups' => 'subCategory:list']);
     }
 
     /**

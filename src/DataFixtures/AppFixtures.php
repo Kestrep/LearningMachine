@@ -40,29 +40,30 @@ class AppFixtures extends Fixture
                 ->setLastConnectionAt($faker->dateTimeBetween('-1 week', 'now'))
                 ->setPassword($this->passwordEncoder->encodePassword($user, 'pass'));
 
-            for ($j=0; $j < mt_rand(1,2); $j++) { 
+            $datetime = new \DateTime();
+            for ($j=0; $j < mt_rand(2,3); $j++) { 
                 $category = new Category();
 
                 $category
                     ->setName("cat°{$j} user°{$i}")
                     ->setDescription($faker->sentence(9))
-                    ->setCreatedAt(new \DateTime())
-                    ->setUpdatedAt(new \DateTime())
+                    ->setCreatedAt($faker->dateTimeBetween('-1 hour', 'now'))
+                    ->setUpdatedAt($faker->dateTimeBetween('-1 hour', 'now'))
                     ;
                 $user->addCategory($category);
 
-                for ($k=0; $k < mt_rand(1, 3); $k++) { 
+                for ($k=0; $k < mt_rand(2, 3); $k++) { 
                     $subCategory = new SubCategory();
 
                     $subCategory
                         ->setName("subCat°{$k} cat°{$j} user°{$i}")
                         ->setDescription($faker->sentence(9))
-                        ->setCreatedAt(new \DateTime())
-                        ->setUpdatedAt(new \DateTime())
+                        ->setCreatedAt($faker->dateTimeBetween('-1 hour', 'now'))
+                        ->setUpdatedAt($faker->dateTimeBetween('-1 hour', 'now'))
                         ;
                     $category->addSubCategory($subCategory);
 
-                    for ($l = 0; $l < mt_rand(2, 5); $l++) {
+                    for ($l = 0; $l < mt_rand(2, 4); $l++) {
                         $card = new Card();
             
                         $card
