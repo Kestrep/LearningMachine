@@ -84,8 +84,9 @@ class CardController extends AbstractController
      */
     public function new(Request $request, Card $card = null, EntityManagerInterface $em): Response
     {
-        // If new, create a new Card
-        if(!$card) {
+        if($card->getSubCategory()->getCategory()->getUser() !== $this->getUser()) {
+            return $this->redirectToRoute('card_index');
+        } else if(!$card) {
             $card = new Card();
         }
         $form = $this->createForm(CardType::class, $card);
