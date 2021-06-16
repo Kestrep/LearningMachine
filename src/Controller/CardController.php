@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/card")
- * @Security("is_granted('ROLE_USER')", message="Vous devez vous connecter pour pouvoir accéder au menu")
+ * @Security("is_granted('ROLE_USER')", message="Vous devez vous connecter pour pouvoir continuer")
  */
 class CardController extends AbstractController
 {
