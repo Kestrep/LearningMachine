@@ -76,29 +76,7 @@ class CardController extends AbstractController
     
 
     // ! @Security("post.isAuthor(user)") dans https://symfony.com/doc/4.2/best_practices/security.html
-
-    // TODO: Delete
-    /**
-     * @Route("/{id}/edite", name="card_edite", methods={"GET","POST"})
-     * @Security("user === card.getSubCategory().getCategory().getUser()", message="Cette annonce ne vous appartient pas")
-     */
-    public function edit(Request $request, Card $card): Response
-    {
-        $form = $this->createForm(CardType::class, $card);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('card_index');
-        }
-
-        return $this->render('card/edit.html.twig', [
-            'card' => $card,
-            'form' => $form->createView(),
-        ]);
-    }
-
+    // TODO people can modify a card that he didn't own
     /**
      * @Route("/new", name="card_new", methods={"GET","POST"})
      * @Route("/{id}/edit", name="card_edit", methods={"GET","POST"})
@@ -137,20 +115,12 @@ class CardController extends AbstractController
             return $this->redirectToRoute('card_index');
         }
 
-        if($card->getID() !== null) {
-            // Form render if modifying
-            return $this->render('card/edit.html.twig', [
-                'card' => $card,
-                'form' => $form->createView(),
-            ]);
-        } else {
-            // Form render if new
-            return $this->render('card/new.html.twig', [
-                'card' => $card,
-                'form' => $form->createView(),
-            ]);
-        }
-        
+        return $this->render('card/form.html.twig', [
+            'edit' => $card->getID() !== null,
+            'card' => $card,
+            'form' => $form->createView(),
+        ]);
+
     }
 
     /**
