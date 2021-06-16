@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\SubCategory;
 use App\Form\SubCategoryType;
 use App\Repository\SubCategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,16 +29,22 @@ class SubCategoryController extends AbstractController
     /**
      * @Route("/new", name="sub_category_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $subCategory = new SubCategory();
         $form = $this->createForm(SubCategoryType::class, $subCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($subCategory);
-            $entityManager->flush();
+            $subCategory->setCreatedAt(new \DateTime());
+            $subCategory->setUpdatedAt(new \DateTime());
+
+            // TODO Ajouter une categorie anonyme en cas de non sélection
+            $categories = $this->getUser()->getCategories();
+            $subCategory->setCategory($categories[0]);
+
+            $em->persist($subCategory);
+            $em->flush();
 
             return $this->redirectToRoute('sub_category_index');
         }
@@ -61,13 +68,13 @@ class SubCategoryController extends AbstractController
     /**
      * @Route("/{id}/edit", name="sub_category_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, SubCategory $subCategory): Response
+    public function edit(Request $request, SubCategory $subCategory, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(SubCategoryType::class, $subCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
 
             return $this->redirectToRoute('sub_category_index');
         }
