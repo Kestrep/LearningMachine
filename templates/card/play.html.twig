@@ -28,8 +28,8 @@
                     <i class="icon-star-fill"></i>
                     <i class="icon-star-empty"></i>
                 </div>
-                <div class="edit-icons d-cc"><i class="icon-closed-eye"></i></div>
-                <div class="edit-icons d-cc"><i class="icon-feather"></i></div>
+                <div class="edit-icons d-cc modal-trigger" data-target="test-modal"><i class="icon-closed-eye"></i></div>
+                <a href="#" class="edit-icons d-cc modal-trigger"><i class="icon-feather"></i></a>
             </nav>
 
             <div class="card-side front moving-card">
@@ -56,13 +56,20 @@
     </section>
 
 
-    <div class="debug">
+    <div class="debug" style="display: none;">
             <div class="btn-orange restore-button">Restore</div>
             <div class="btn-orange request-fulldeck-button">Get some cards</div>
             <div class="btn-orange request-update-button" data-stage="up">Stage Up</div>
             <div class="btn-orange request-update-button" data-stage="down">Stage Down</div>
     </div>
+
+    <div id="test-modal" class="modal-content">
+        <h1>Lorem ipsum dolor</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni fugiat natus laudantium rem.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, eveniet!</p>
+    </div>
 </main>
+
     
 {% endblock %}
 

@@ -1,0 +1,23 @@
+.modal-content:not(.active) {
+    display: none;
+}
+
+.modal-trigger {
+    cursor: pointer;
+}
+
+.modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba($black, 0.7);
+}
+
+.modal-ctr {
+    min-height: 50px;
+    min-width: 50px;
+    background-color: white;
+    border-radius: 5px;
+}

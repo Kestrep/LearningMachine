@@ -7,6 +7,8 @@ export default function debugButtons() {
     const categoryInput = document.querySelector('#card_category')
     const subCategoryInput = document.querySelector('#card_subCategory')
 
+    if (categoryInput == null || subCategoryInput == null) return
+
     categoryInput.addEventListener('change', e => {
 
         fetch(partialUrl + e.target.value).then(result => result.json()).then(objects => {

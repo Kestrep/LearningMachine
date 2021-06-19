@@ -1,14 +1,13 @@
-/*
-playStep :
-1 = First visit
-2 = SecondVisit
-3 = Last Visit
-*/
+/**
+ * 
+ */
 
 let deck = [];
 let currentPlayingCardObject;
 
 const playgroundHtmlElement = document.querySelector('.playground-ctr');
+
+
 
 function setCurrentPlayingCardObject(cardObject) {
     currentPlayingCardObject = cardObject;
@@ -51,8 +50,6 @@ function getCardsWithAjaxDebug() {
         })
     }
 }
-
-
 
 /**
  * 
