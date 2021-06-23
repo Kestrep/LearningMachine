@@ -18,6 +18,12 @@
 .modal-ctr {
     min-height: 50px;
     min-width: 50px;
+    width: 100%;
+    max-height: calc(100% - 4rem);
+    max-width: calc(100% - 4rem);
+    overflow-y: scroll;
     background-color: white;
     border-radius: 5px;
+    padding: 1rem;
+    padding-bottom: 2rem;
 }

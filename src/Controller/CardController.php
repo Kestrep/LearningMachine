@@ -31,6 +31,7 @@ class CardController extends AbstractController
     }
 
     /**
+     * Utilisée pour l'instant dans le debug-button
      * @Route("/ajax", name="ajax_get", methods={"GET"})
      */
     public function ajax(CardRepository $cardRepository, EntityManagerInterface $em): Response
@@ -70,7 +71,7 @@ class CardController extends AbstractController
     public function play(CardRepository $cardRepository): Response
     {
         return $this->render('card/play.html.twig', [
-            'cards' => $cardRepository->findAll(),
+            'card' => $cardRepository->findAll()['0'],
         ]);
     }
     
@@ -84,11 +85,14 @@ class CardController extends AbstractController
      */
     public function new(Request $request, Card $card = null, EntityManagerInterface $em): Response
     {
-        if($card->getSubCategory()->getCategory()->getUser() !== $this->getUser()) {
+        // Vérification du user
+        if($card && $card->getSubCategory()->getCategory()->getUser() !== $this->getUser()) {
             return $this->redirectToRoute('card_index');
         } else if(!$card) {
             $card = new Card();
         }
+
+        // Initiation formulaire
         $form = $this->createForm(CardType::class, $card);
         $form->handleRequest($request);
         
@@ -116,8 +120,18 @@ class CardController extends AbstractController
             return $this->redirectToRoute('card_index');
         }
 
-        return $this->render('card/form.html.twig', [
+        // Form rendering
+        if($request->isXmlHttpRequest()) {
+            return $this->render('card/_form.html.twig', [
+                'edit' => $card->getID() !== null,
+                'ajaxForm' => true,
+                'card' => $card,
+                'form' => $form->createView(),
+            ]);
+        };
+        return $this->render('card/edit.html.twig', [
             'edit' => $card->getID() !== null,
+            'ajaxForm' => false,
             'card' => $card,
             'form' => $form->createView(),
         ]);

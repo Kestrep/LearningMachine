@@ -18,19 +18,7 @@
     {% endif %}
     </h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <div class="buttons d-cc">
-            <div class="btn-darkgrey">Revenir</div>
-            <button class="btn-orange submit-button">
-                {% if edit %}
-                    Modifier
-                {% elseif not edit %}
-                    Créer
-                {% endif %}
-            </button>
-        </div>
-    {{ form_end(form) }}
+    {{ include('card/_form.html.twig', {'edit': true}) }}
 
     {# <div class="debug">
         <input type="text" name="" id="loremCopy-WordsCount" value="52">

@@ -33,19 +33,29 @@ const fetchThecontent = url => {
      *  Ajout d'une catégorie
      * Modification d'une catégorie
      */
+    let result = document.createElement('div')
     fetch(url, {
         method: 'POST',
         // body: JSON.stringify(data),
-        // headers: { 'X-Requested-With': 'XMLHttpRequest' },
-    }).then(result => result.json()).then(response => console.log(response))
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    }).then(response => {
+        return response.text()
+    }).then(html => {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(html, 'text/html')
+        let form = doc.querySelector('form')
 
-    return document.createElement('div')
+        result.appendChild(form)
+    })
+
+    return result
 }
 
 /**
  * @param {HTMLElement} modal
  */
 const fillModal = (modal, modalContent) => {
+    modal.querySelector('.modal-ctr').appendChild(modalContent)
     console.log('fill the modal', modalContent)
 }
 
@@ -55,7 +65,21 @@ const fillModal = (modal, modalContent) => {
 const listenForCloseModal = (modal) => {
     modal.addEventListener('click', (e) => {
 
-        if (!modal.querySelector('.modal-ctr').contains(e.target)) closeModal(modal)
+        if (modal.querySelector('.submit-button').contains(e.target)) {
+            e.preventDefault();
+            let form = modal.querySelector('form')
+            let url = modal.querySelector('.submit-button').dataset.url
+            console.log(url)
+            let formData = new FormData(form);
+
+            fetch(url, {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                body: formData
+            }).then(closeModal(modal))
+
+        }
+        if (!modal.querySelector('.modal-ctr').contains(e.target) || modal.querySelector('.close-modal').contains(e.target)) closeModal(modal)
     })
 }
 

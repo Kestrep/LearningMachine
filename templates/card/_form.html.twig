@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="buttons d-cc">
+        <div class="btn-darkgrey {% if ajaxForm %}close-modal">Fermer la fenêtre{% else %}">Revenir{% endif %}</div>
+        <button class="btn-orange submit-button" {% if ajaxForm %}data-url="{{ path('card_edit', {'id': card.id}) }}"{% endif %}>
+            {% if edit %}
+                Modifier
+            {% elseif not edit %}
+                Créer
+            {% endif %}
+        </button>
+    </div>
+{{ form_end(form) }}
