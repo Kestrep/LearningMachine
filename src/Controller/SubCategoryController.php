@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\SubCategory;
 use App\Form\SubCategoryType;
 use App\Repository\SubCategoryRepository;
@@ -27,11 +28,17 @@ class SubCategoryController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="sub_category_new", methods={"GET","POST"})
+     * @Route("/new/{category}", name="sub_category_new", methods={"GET","POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, Category $category = null): Response
     {
         $subCategory = new SubCategory();
+        if($category) {
+            if($category->getUser() !== $this->getUser()) {
+                return $this->redirectToRoute('card_index');
+            }
+            $subCategory->setCategory($category);
+        }
         $form = $this->createForm(SubCategoryType::class, $subCategory);
         $form->handleRequest($request);
 

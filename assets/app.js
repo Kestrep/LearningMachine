@@ -11,13 +11,16 @@ import './app.scss';
 import handleBurger from './js/burger';
 import debugButtons from './js/debug';
 import handleModal from './js/modal';
+import formEvents from './js/formEvents'
 // import './js/utilities';
 
 handleBurger()
 
 window.addEventListener('load', function() {
+    // Component
     debugButtons()
     handleModal()
+    formEvents()
 })
 
 // start the Stimulus application

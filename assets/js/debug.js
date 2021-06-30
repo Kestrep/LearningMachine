@@ -3,27 +3,7 @@
  */
 export default function debugButtons() {
 
-    const partialUrl = 'http://127.0.0.1:8000/card/new/ajax/getSubCategory/' // Ajouter l'ID
-    const categoryInput = document.querySelector('#card_category')
-    const subCategoryInput = document.querySelector('#card_subCategory')
 
-    if (categoryInput == null || subCategoryInput == null) return
-
-    categoryInput.addEventListener('change', e => {
-
-        fetch(partialUrl + e.target.value).then(result => result.json()).then(objects => {
-            console.log(objects)
-            subCategoryInput.innerHTML = ''
-            objects.forEach(obj => {
-                const optionElement = document.createElement('option')
-                optionElement.value = obj.id
-                optionElement.innerText = obj.name
-                subCategoryInput.append(optionElement)
-
-            })
-        })
-
-    })
 
 
     //     // ? Comment faire un truc plus propre ?
@@ -52,9 +32,9 @@ export default function debugButtons() {
     //         });
     //     })
 
-    const url = 'http://127.0.0.1:8000/card/new'
+    // const url = 'http://127.0.0.1:8000/card/new'
     const form = document.querySelector('form-d')
-        // if (!form) return
+    if (!form) return
 
     form.addEventListener('submit', e => {
         e.preventDefault()

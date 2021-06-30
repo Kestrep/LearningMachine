@@ -1,4 +1,6 @@
 {{ form_start(form) }}
+    {{ form_row(form.category, { 'attr': {'data-target': path('category_new') }}) }}
+    {{ form_row(form.subCategory, { 'attr': {'data-target': path('sub_category_new') }}) }}
     {{ form_widget(form) }}
     <div class="buttons d-cc">
         <div class="btn-darkgrey {% if ajaxForm %}close-modal">Fermer la fenêtre{% else %}">Revenir{% endif %}</div>

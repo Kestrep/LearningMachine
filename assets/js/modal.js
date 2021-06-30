@@ -67,6 +67,7 @@ const listenForCloseModal = (modal) => {
 
         if (modal.querySelector('.submit-button').contains(e.target)) {
             e.preventDefault();
+            console.log('Hey !!!')
             let form = modal.querySelector('form')
             let url = modal.querySelector('.submit-button').dataset.url
             console.log(url)
@@ -89,16 +90,46 @@ const closeModal = (modal) => {
     modal.remove()
 }
 
+/**
+ * 
+ * @param {*} modalTrigger 
+ * @param {*} modalContent = null
+ */
+export const addModalEvents = (modalTrigger, modalContent = null) => {
+    modalTrigger.addEventListener('click', e => {
+        console.log(e)
+        const modal = openModal(e)
 
-export default function handleModal() {
-    document.querySelectorAll('.modal-trigger').forEach(trigger => {
-        trigger.addEventListener('click', e => {
-            const modal = openModal(e)
-
-            const modalContent = document.querySelector(`#${trigger.dataset.target}`) ? document.querySelector(`#${trigger.dataset.target}`) : fetchThecontent(trigger.href)
-
+        if (modalContent && typeof modalContent === 'function') {
+            modalContent().then(res => {
+                console.log('resultat du callback', res.querySelector('form'))
+                fillModal(modal, res.querySelector('form'))
+            })
+        } else if (!modalContent && document.querySelector(`#${modalTrigger.dataset.target}`)) {
+            modalContent = document.querySelector(`#${modalTrigger.dataset.target}`)
             fillModal(modal, modalContent)
-            listenForCloseModal(modal)
-        })
+        } else if (!modalContent && modalTrigger.href) {
+            modalContent = fetchThecontent(modalTrigger.href)
+            fillModal(modal, modalContent)
+        }
+        // const modalContent = document.querySelector(`#${trigger.dataset.target}`) ? document.querySelector(`#${trigger.dataset.target}`) : fetchThecontent(trigger.href)
+        listenForCloseModal(modal)
     })
 }
+
+
+export default function handleModal(element = null, target = null) {
+    if (!element) { element = document }
+    element.querySelectorAll('.modal-trigger').forEach(trigger => {
+        addModalEvents(trigger)
+    })
+}
+
+/**
+ * A chaque modal trigger
+ * J'ajoute un écouteur d'évènement
+ * Je lui donne des options
+ * Ce peut être le contenu
+ * Ce peut être le type de contenu
+ * 
+ */

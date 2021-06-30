@@ -1,4 +1,5 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="btn-darkgrey close-modal">Fermer</div>
+    <button class="btn-orange submit-button" data-url="{{ path('category_new') }}">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
