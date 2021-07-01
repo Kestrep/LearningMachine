@@ -29,4 +29,12 @@ const ifExist = (element, callback) => {
     callback(element)
 }
 
-export { $, ifExist }
+const textToHTML = string => {
+
+    let temp = document.createElement('div')
+    temp.innerHTML = string
+
+    return temp.firstChild
+}
+
+export { $, ifExist, textToHTML }

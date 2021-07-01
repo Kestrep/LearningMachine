@@ -21,22 +21,6 @@ window.addEventListener('load', function() {
     debugButtons()
     handleModal()
     formEvents()
-
-    // ! Supprimer
-    let debugDiv = $('.debug')
-    let debugButtonsArray = $('.debug div')
-    debugDiv.style.display = 'block'
-    console.log('debugDiv : ', debugDiv)
-    console.log('debugButtonsArray : ', debugButtonsArray)
-
-    ifExist('.debug', element => {
-        element.style.display = 'block'
-        element.style.backgroundColor = 'red'
-    })
-
-    $('.debug div').forEach(obj => {
-        obj.style.backgroundColor = 'green'
-    })
 })
 
 // start the Stimulus application

@@ -7,8 +7,8 @@
     <!-- Header -->
     <section class="header d-bc">
         <div class="card-breadcrumb">
-            <div class="domain"><div class="square"></div>Domaine</div>
-            <div class="subdomain"><div class="square"></div>Sous-Domaine</div>
+            <div class="domain"><div class="square"></div>{{ card.subCategory }}</div>
+            <div class="subdomain"><div class="square"></div>{{ card.subCategory.category }}</div>
         </div>
         <div class="btn-green">
             Bravo !<i class="icon-thumbs-up inht"></i>
@@ -20,36 +20,7 @@
     <!-- Main section -->
     <section class="main">
 
-        <!-- Playground -->
-        <div class="playground-ctr stacked-cards">
-            <nav class="card-menu active d-ee">
-                <div class="stage-icons d-ce">
-                    <i class="icon-star-fill"></i>
-                    <i class="icon-star-fill"></i>
-                    <i class="icon-star-empty"></i>
-                </div>
-                <div class="edit-icons d-cc modal-trigger" data-target="test-modal"><i class="icon-closed-eye"></i></div>
-                <a href="{{ path('card_edit', {'id': card.id}) }}" class="edit-icons d-cc modal-trigger"><i class="icon-feather"></i></a>
-            </nav>
-
-            <div class="card-side front moving-card">
-                <div class="content d-cc">
-                    <div class="main-ctnt">{{ card.frontMaincontent }}</div>
-                    <div class="sub-ctnt">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</div>
-                </div>
-            </div>
-            <div class="card-side back">
-                <div class="content d-cc">
-                    <div class="main-ctnt">Lorem ipsum dolor sit amet.</div>
-                    <div class="sub-ctnt">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</div>
-                </div>
-            </div>
-
-            <div class="note-ctr">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque non quasi unde veniam, dolores facere voluptatem error quis numquam sequi necessitatibus vitae eaque cumque maiores?
-            </div>
-        </div>
-        <!-- End of Playground -->
+        {{ include('card/_card.html.twig', {card: card})}}
         
     </section>
     <section class="footer">

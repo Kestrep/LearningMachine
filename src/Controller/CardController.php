@@ -3,16 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Card;
-use App\Entity\Category;
 use App\Form\CardType;
+use App\Entity\Category;
 use App\Repository\CardRepository;
-use App\Repository\SubCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\SubCategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/card")
@@ -32,11 +34,32 @@ class CardController extends AbstractController
 
     /**
      * Utilisée pour l'instant dans le debug-button
-     * @Route("/ajax", name="ajax_get", methods={"GET"})
+     * @Route("/get/{count}", name="get_cards", methods={"GET"})
      */
-    public function ajax(CardRepository $cardRepository, EntityManagerInterface $em): Response
+    public function getSomeCards(CardRepository $cardRepository, int $count = null, NormalizerInterface $normalizer): Response
     {
-        return $this->json($cardRepository->findUserCards(), 200, [], ['groups' => 'card:read']);
+        if ($count === null) {
+            return $this->json([], 200, [], ['groups' => 'card:read']);
+        }
+
+        $cards = $cardRepository->findUserCards($count);
+        $normalizedCards = $normalizer->normalize($cards, null, [
+            'groups' => 'card:read'
+        ]);
+
+        
+        foreach($normalizedCards as $key => $value) {
+
+            $localCard = $cards[$key];
+            $normalizedCards[$key] += ["html" => $this->renderView('card/_card.html.twig', [
+                'card' => $localCard
+            ])];
+        }
+
+        $json = json_encode($normalizedCards);
+
+        // return $this->json($json, 200, [], ['groups' => 'card:read']);
+        return new JsonResponse($json, 200, [], true);
     }
 
     /**

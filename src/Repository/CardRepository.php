@@ -25,7 +25,7 @@ class CardRepository extends ServiceEntityRepository
     /**
      * 
      */
-    public function findUserCards()
+    public function findUserCards($count = 20)
     {
         $query = $this
                     ->createQueryBuilder('c')
@@ -35,7 +35,7 @@ class CardRepository extends ServiceEntityRepository
                     ->where('u = :user')
                     ->setParameter('user', $this->user)
                     // ->setFirstResult(50)
-                    ->setMaxResults(15)
+                    ->setMaxResults($count)
                     ->orderBy('c.createdAt', 'ASC')
                     ->getQuery()
                     ->getResult()
