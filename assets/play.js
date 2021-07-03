@@ -32,32 +32,52 @@ const playground = $('.playground-ctr');
  * Configure le deck, configure les cartes
  */
 export default async function updatePlayground() {
-    console.log('updatePlayground')
 
     // Avoir toujours 20 cartes à jouer (donc dont le playstep est strictement inférieur à 4) dans le deck
     let realDeckCount = 0;
+    let idList = [];
     const DECK_SIZE = 20;
     deck.forEach(card => {
         if (card.playstep < 4) realDeckCount += 1;
+        idList.push(card.id)
     })
 
-    /* if (realDeckCount <= DECK_SIZE) {
-        await fetch(playground.dataset.bank + '/' + (DECK_SIZE - realDeckCount)).then(res => res.json()).then(res => {
-            res.map(card => {
+    if (idList.length === 0) {
+        idList = [1]
+    }
 
-                // Transforme le render text HTML
-                card.html = textToHTML(card.html)
+    const jsonPost = {
+        count: (DECK_SIZE - realDeckCount),
+        idList: idList
+    }
 
-                // Ajoute les events listener
-                addFrontEvents($('.card-side.front', card.html))
-                    // addBackEvents($('.card-side.back', card.html))
+
+    if (realDeckCount < DECK_SIZE) {
+        await fetch(playground.dataset.bank, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(jsonPost)
             })
+            .then(res => res.json()).then(res => {
+                res.map(card => {
 
-            deck = deck.concat(res)
-        })
-    } */
+                    card.html = textToHTML(card.html)
+                    card.frontPlayed = false
+                    card.playstep = 1
 
-    if (deck.length < 2) {
+                    // Ajoute les events listener
+                    addFrontEvents($('.card-side.front', card.html), card)
+                    addBackEvents($('.card-side.back', card.html), card)
+                })
+
+                deck = deck.concat(res)
+            })
+    }
+
+    /* if (deck.length < 2) {
         tempRes.map(card => {
 
             card.html = textToHTML(card.html)
@@ -73,11 +93,10 @@ export default async function updatePlayground() {
 
         console.log("Téléchargement terminé. Let's go avec les " + deck.length + " cartes !")
 
-    }
+    } */
 
-    console.log(deck)
-        // Initie la première carte du deck
-        // ! Ca va poser problème !
+    // Initie la première carte du deck
+    // ! Ca va poser problème !
     $('.playground-limits').textContent = ''
     $('.playground-limits').appendChild(deck[0].html)
 }
@@ -121,18 +140,24 @@ const handleCard = async(card, order = 'fail') => {
             // Ca dépend du playstep
             if (card.playstep === 1) { // Carte jamais jouée
 
-                // On envoie un peu plus loin (+3)
+                card.playstep = 2
+                    // On envoie un peu plus loin (+3)
                 deck = replaceCard(3)
             } else if (card.playstep === 2) { // Carte jouée une fois avec succès
 
-                // On envoie un peu plus loin (+7)
+                card.playstep = 3
+                    // On envoie un peu plus loin (+7)
                 deck = replaceCard(7)
 
             } else if (card.playstep === 3) { // Carte jouée deux fois avec succès
 
-                // On update son stage dans la bdd
+                card.playstep = 4
+
+                // On supprime la carte du deck
                 let cardToSend = deck.shift()
-                    // On supprime la carte du deck
+                    // On update son stage dans la bdd
+                const url = $('nav', card.html).dataset.updateurl
+                console.log(url)
             }
 
         } else {
@@ -211,7 +236,6 @@ function addFrontEvents(element, card) {
 
     element.addEventListener('mouseleave', e => {
         if (card.frontPlayed === true) return
-        console.log('mouseleave of front')
         initiate = false
         element.style.transform = `translate(0%, 0%) rotateZ(0deg)`
         element.style.opacity = 1
@@ -303,7 +327,6 @@ function addBackEvents(element, card) {
 
     element.addEventListener('mouseleave', e => {
         if (card.frontPlayed === false || card.frontPlayed === null) return
-        console.log('mouseleave of back')
         initiate = false
         element.style.transform = `translate(0%)`
         element.style.opacity = 1

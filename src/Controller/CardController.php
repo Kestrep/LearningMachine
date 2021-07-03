@@ -33,16 +33,17 @@ class CardController extends AbstractController
     }
 
     /**
-     * Utilisée pour l'instant dans le debug-button
-     * @Route("/get/{count}", name="get_cards", methods={"GET"})
+     * @Route("/get", name="get_cards", methods={"POST"})
      */
-    public function getSomeCards(CardRepository $cardRepository, int $count = null, NormalizerInterface $normalizer): Response
+    public function getCards(CardRepository $cardRepository, NormalizerInterface $normalizer, Request $request): Response
     {
-        if ($count === null) {
+        $parameters = json_decode($request->getContent(), true);
+
+        if ($parameters['count'] === null) {
             return $this->json([], 200, [], ['groups' => 'card:read']);
         }
 
-        $cards = $cardRepository->findUserCards($count);
+        $cards = $cardRepository->findUserCards($parameters['count'], $parameters['idList']);
         $normalizedCards = $normalizer->normalize($cards, null, [
             'groups' => 'card:read'
         ]);
@@ -63,9 +64,9 @@ class CardController extends AbstractController
     }
 
     /**
-     * @Route("/ajax/update", name="ajax_update", methods={"POST"})
+     * @Route("/stage/{id}", name="stage_update", methods={"POST"})
      */
-    public function update(CardRepository $cardRepository, EntityManagerInterface $em, Request $request): Response
+    public function updateCard(CardRepository $cardRepository, EntityManagerInterface $em, Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
         
@@ -104,7 +105,6 @@ class CardController extends AbstractController
     /**
      * @Route("/new", name="card_new", methods={"GET","POST"})
      * @Route("/{id}/edit", name="card_edit", methods={"GET","POST"})
-     * 
      */
     public function new(Request $request, Card $card = null, EntityManagerInterface $em): Response
     {

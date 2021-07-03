@@ -25,15 +25,20 @@ class CardRepository extends ServiceEntityRepository
     /**
      * 
      */
-    public function findUserCards($count = 20)
+    public function findUserCards($count = 20, $idList = [0 => 0])
     {
+        if($idList === []) {
+            $idList === [0 => 1];
+        }
         $query = $this
                     ->createQueryBuilder('c')
                     ->join('c.subCategory', 's')
                     ->join('s.category', 'cat')
                     ->join('cat.user', 'u')
                     ->where('u = :user')
+                    ->andWhere('c.id NOT IN (:idList)')
                     ->setParameter('user', $this->user)
+                    ->setParameter('idList', $idList)
                     // ->setFirstResult(50)
                     ->setMaxResults($count)
                     ->orderBy('c.createdAt', 'ASC')
