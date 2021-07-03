@@ -64,21 +64,19 @@ class CardController extends AbstractController
     }
 
     /**
-     * @Route("/stage/{id}", name="stage_update", methods={"POST"})
+     * @Route("/stage", name="stage_update", methods={"POST"})
      */
     public function updateCard(CardRepository $cardRepository, EntityManagerInterface $em, Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
-        
-        $cardStage = $data['stage'];
 
         $card = $cardRepository->find($data['id']);
 
         $currentStage = $card->getStage();
-        if($data['stage'] === 'up') {
+        if($data['action'] === 'level-up') {
             $card->setStage($currentStage + 1);
             $message = "Une carte apprise !!!";
-        } else if ($data['stage'] === 'down') {
+        } else if ($data['action'] === 'level-down') {
             $card->setStage($currentStage - 1);
             $message = "On va faire descendre la pression !";
         }

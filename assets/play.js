@@ -36,7 +36,7 @@ export default async function updatePlayground() {
     // Avoir toujours 20 cartes à jouer (donc dont le playstep est strictement inférieur à 4) dans le deck
     let realDeckCount = 0;
     let idList = [];
-    const DECK_SIZE = 20;
+    const DECK_SIZE = 3 // 20;
     deck.forEach(card => {
         if (card.playstep < 4) realDeckCount += 1;
         idList.push(card.id)
@@ -137,7 +137,8 @@ const handleCard = async(card, order = 'fail') => {
             deck = replaceCard(3)
         } else if (order === 'success') {
 
-            // Ca dépend du playstep
+            console.log(card.playstep)
+                // Ca dépend du playstep
             if (card.playstep === 1) { // Carte jamais jouée
 
                 card.playstep = 2
@@ -157,7 +158,17 @@ const handleCard = async(card, order = 'fail') => {
                 let cardToSend = deck.shift()
                     // On update son stage dans la bdd
                 const url = $('nav', card.html).dataset.updateurl
-                console.log(url)
+                fetch($('nav', card.html).dataset.updateurl, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        "Content-type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id: card.id,
+                        action: 'level-up'
+                    })
+                }).then(res => res.json()).then(res => console.log(res))
             }
 
         } else {
@@ -187,8 +198,6 @@ function addFrontEvents(element, card) {
 
     // mouse down ==> récupère des coordonnées
     element.addEventListener('mousedown', e => {
-
-        console.log(card.frontPlayed)
 
         if (card.frontPlayed === true) return
             // Initialize X and Y
@@ -287,8 +296,6 @@ function addBackEvents(element, card) {
 
     // mouse move ==> fait bouger la carte
     element.addEventListener('mousemove', e => {
-
-
 
         if (!initiate || card.frontPlayed === false || card.frontPlayed === null) return
         rX = e.clientX - iX;
