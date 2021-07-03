@@ -57,7 +57,7 @@ export default async function updatePlayground() {
         })
     } */
 
-    if (deck < 2) {
+    if (deck.length < 2) {
         tempRes.map(card => {
 
             card.html = textToHTML(card.html)
@@ -74,10 +74,25 @@ export default async function updatePlayground() {
         console.log("Téléchargement terminé. Let's go avec les " + deck.length + " cartes !")
 
     }
-    // Initie la première carte du deck
-    // ! Ca va poser problème !
+
+    console.log(deck)
+        // Initie la première carte du deck
+        // ! Ca va poser problème !
     $('.playground-limits').textContent = ''
     $('.playground-limits').appendChild(deck[0].html)
+}
+
+const replaceCard = (newIndex = 2) => {
+
+    const card = deck.shift();
+    let tempArray = [];
+    for (let i = 0; i < deck.length; i++) {
+        const element = deck[i];
+        if (i === newIndex) { tempArray.push(card) }
+        tempArray.push(element);
+        if ((newIndex >= deck.length && i === deck.length - 1)) { tempArray.push(card) }
+    }
+    return tempArray;
 }
 
 
@@ -97,24 +112,27 @@ const handleCard = async(card, order = 'fail') => {
 
         // Gérer les évènements quand le front et le back ont été joués
     } else if (card.frontPlayed === true) {
+        card.frontPlayed = false
         if (order === 'fail') {
             // On remet dans le deck 3 cartes plus tard
+            deck = replaceCard(3)
         } else if (order === 'success') {
 
             // Ca dépend du playstep
             if (card.playstep === 1) { // Carte jamais jouée
 
                 // On envoie un peu plus loin (+3)
+                deck = replaceCard(3)
             } else if (card.playstep === 2) { // Carte jouée une fois avec succès
 
                 // On envoie un peu plus loin (+7)
+                deck = replaceCard(7)
 
             } else if (card.playstep === 3) { // Carte jouée deux fois avec succès
 
                 // On update son stage dans la bdd
-
-                // On supprime la carte du deck
-
+                let cardToSend = deck.shift()
+                    // On supprime la carte du deck
             }
 
         } else {
@@ -145,6 +163,8 @@ function addFrontEvents(element, card) {
     // mouse down ==> récupère des coordonnées
     element.addEventListener('mousedown', e => {
 
+        console.log(card.frontPlayed)
+
         if (card.frontPlayed === true) return
             // Initialize X and Y
         iX = e.clientX;
@@ -174,13 +194,15 @@ function addFrontEvents(element, card) {
         }
 
         if (traveledX > 1) {
-            element.style.transform = `translate(200%)`
             handleCard(card, 'success')
             initiate = false
+            element.style.transform = `translate(200%)`
+            element.style.opacity = 0
         } else if (traveledX < -1) {
-            element.style.transform = `translate(-200%)`
             handleCard(card, 'fail')
             initiate = false
+            element.style.transform = `translate(200%)`
+            element.style.opacity = 0
         }
 
     })
@@ -191,7 +213,7 @@ function addFrontEvents(element, card) {
         if (card.frontPlayed === true) return
         console.log('mouseleave of front')
         initiate = false
-        element.style.transform = `translate(${0 * 50}%, ${0}px) rotateZ(${0 * 45}deg)`
+        element.style.transform = `translate(0%, 0%) rotateZ(0deg)`
         element.style.opacity = 1
     })
 
@@ -200,7 +222,7 @@ function addFrontEvents(element, card) {
         initiate = false
 
         traveledX = 0;
-        element.style.transform = `translate(${0 * 50}%, ${0}px) rotateZ(${0 * 45}deg)`
+        element.style.transform = `translate(0%, 0%) rotateZ(0deg)`
         element.style.opacity = 1
 
     })
@@ -226,6 +248,8 @@ function addBackEvents(element, card) {
     // mouse down ==> récupère des coordonnées
     element.addEventListener('mousedown', e => {
 
+
+
         if (card.frontPlayed === false || card.frontPlayed === null) return
 
         // Initialize X and Y
@@ -239,6 +263,8 @@ function addBackEvents(element, card) {
 
     // mouse move ==> fait bouger la carte
     element.addEventListener('mousemove', e => {
+
+
 
         if (!initiate || card.frontPlayed === false || card.frontPlayed === null) return
         rX = e.clientX - iX;
@@ -256,13 +282,19 @@ function addBackEvents(element, card) {
         }
 
         if (traveledX > 1) {
+            initiate = false
+            element.style.transform = `translate(0%, 0%) rotateZ(0deg)`
+            element.style.opacity = 1
+            $('.card-side.front', card.html).style.transform = `translate(0%)`
+            $('.card-side.front', card.html).style.opacity = 1
             handleCard(card, 'success')
-            initiate = false
-            element.style.transform = `translate(200%)`
         } else if (traveledX < -1) {
-            handleCard(card, 'fail')
             initiate = false
-            element.style.transform = `translate(-200%)`
+            element.style.transform = `translate(0%, 0%) rotateZ(0deg)`
+            element.style.opacity = 1
+            $('.card-side.front', card.html).style.transform = `translate(0%)`
+            $('.card-side.front', card.html).style.opacity = 1
+            handleCard(card, 'fail')
         }
 
     })
