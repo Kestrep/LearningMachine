@@ -39,6 +39,11 @@ main.play {
         align-self: stretch;
         overflow-x: hidden;
     }
+    .playground-limits {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
     .playground-ctr {
         position: absolute;
         top: 50%;
@@ -64,6 +69,8 @@ main.play {
             width: 95%;
             padding: $gutter*2;
             z-index: 5;
+            transform-origin: 50% 50%;
+            transition: 3ms ease-in;
             &.back {
                 top: 0;
                 left: 0;

@@ -3,10 +3,14 @@
  * @param {*} selector 
  * @param {*} selector 
  */
-const $ = (selector, container = null) => {
+const $ = (selector, container = null, log = false) => {
+
+    if (log) console.log(container)
 
     if (container === null) container = document
     const nodeList = container.querySelectorAll(selector);
+
+    if (log) console.log('Utilities : ' + nodeList.length + ' éléments sélectionnés.')
 
     if (nodeList.length === 1) {
         return nodeList[0]

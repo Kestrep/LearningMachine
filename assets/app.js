@@ -13,6 +13,7 @@ import debugButtons from './js/debug';
 import handleModal from './js/modal';
 import formEvents from './js/formEvents';
 import { $, ifExist } from './js/utilities';
+import updatePlayground from './play.js'
 
 handleBurger()
 
@@ -21,6 +22,7 @@ window.addEventListener('load', function() {
     debugButtons()
     handleModal()
     formEvents()
+    updatePlayground()
 })
 
 // start the Stimulus application
