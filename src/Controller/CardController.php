@@ -73,10 +73,10 @@ class CardController extends AbstractController
         $card = $cardRepository->find($data['id']);
 
         $currentStage = $card->getStage();
-        if($data['action'] === 'level-up') {
+        if($data['action'] === 'stage-up') {
             $card->setStage($currentStage + 1);
             $message = "Une carte apprise !!!";
-        } else if ($data['action'] === 'level-down') {
+        } else if ($data['action'] === 'stage-down') {
             $card->setStage($currentStage - 1);
             $message = "On va faire descendre la pression !";
         }
@@ -84,7 +84,12 @@ class CardController extends AbstractController
         $em->persist($card);
         $em->flush();
 
-        return $this->json($message, 201, [], ['groups' => 'card:read']);
+        return $this->json([
+            'message' => $message,
+            'exclamation' => 'Hey !',
+            'color' => 'orange',
+            'icon' => 'feather',
+        ], 201, [], ['groups' => 'card:read']);
     }
 
     /**

@@ -3,6 +3,10 @@ main.play {
     // HEADER
     .header {
         flex-wrap: wrap;
+        .top-ctr {
+            position: relative;
+            width: 100%;
+        }
     }
     .square {
         display: inline-block;

@@ -33,6 +33,11 @@ const ifExist = (element, callback) => {
     callback(element)
 }
 
+/**
+ * Convertit une string en element HTML
+ * @param {String} string 
+ * @returns {HTMLElement}
+ */
 const textToHTML = string => {
 
     let temp = document.createElement('div')
@@ -41,4 +46,31 @@ const textToHTML = string => {
     return temp.firstChild
 }
 
-export { $, ifExist, textToHTML }
+/**
+ * 
+ * @param {String} message 
+ * @param {String} exclamation 
+ * @param {String} color 
+ * @param {String} icon
+ */
+const displayFlash = (message, exclamation = null, color = 'green', icon = 'thumbs-up') => {
+
+    if (message.length < 7 && exclamation === null) {
+        exclamation = message
+        message = null
+    } else if (exclamation === null) {
+        exclamation = 'Bravo !'
+    }
+
+    $('.flash-ctr').innerHTML = `<a class="btn-${color} flash">${exclamation} <i class="icon-${icon} inht"></i></a>`
+    $('.info-scroll').innerHTML = message
+
+    setTimeout(() => {
+        $('.flash-ctr').classList.add('display-flash')
+        setTimeout(() => {
+            $('.flash-ctr').classList.remove('display-flash')
+        }, 5000)
+    }, 100)
+}
+
+export { $, ifExist, textToHTML, displayFlash }

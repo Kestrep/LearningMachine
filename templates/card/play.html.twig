@@ -6,14 +6,18 @@
 <main class="play d-bc">
     <!-- Header -->
     <section class="header d-bc">
+    <div class="top-ctr d-bc">
         <div class="card-breadcrumb">
             <div class="domain"><div class="square"></div>{{ card.subCategory }}</div>
             <div class="subdomain"><div class="square"></div>{{ card.subCategory.category }}</div>
         </div>
-        <div class="btn-green">
-            Bravo !<i class="icon-thumbs-up inht"></i>
+        <div class="flash-ctr">
+            <a class="btn-green flash">
+                Bravo !<i class="icon-thumbs-up inht"></i>
+            </a>
         </div>
-        <div class="info-scroll">4 cartes apprises jusqu'à maintenant !</div>
+    </div>
+    <div class="info-scroll">4 cartes apprises jusqu'à maintenant !</div>
 
     </section>
 
@@ -47,5 +51,5 @@
 {% endblock %}
 
 {% block javascripts %}
-            {{ encore_entry_script_tags('play') }}
+    {{ encore_entry_script_tags('play') }}
 {% endblock %}

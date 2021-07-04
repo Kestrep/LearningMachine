@@ -1,5 +1,5 @@
 // import handleCard from './js/handleCard__delete';
-import { $, textToHTML } from './js/utilities';
+import { $, textToHTML, displayFlash } from './js/utilities';
 /** Informations générales
  * Les cycles de vie d'un carte :
  * 
@@ -166,9 +166,12 @@ const handleCard = async(card, order = 'fail') => {
                     },
                     body: JSON.stringify({
                         id: card.id,
-                        action: 'level-up'
+                        action: 'stage-up'
                     })
-                }).then(res => res.json()).then(res => console.log(res))
+                }).then(res => res.json()).then(res => {
+                    console.log(res)
+                    displayFlash(res.message, res.exclamation, res.color, res.icon)
+                })
             }
 
         } else {
