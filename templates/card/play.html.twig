@@ -11,13 +11,13 @@
             <div class="domain"><div class="square"></div>{{ card.subCategory }}</div>
             <div class="subdomain"><div class="square"></div>{{ card.subCategory.category }}</div>
         </div>
-        <div class="flash-ctr">
-            <a class="btn-green flash">
+        <div class="flash-ctr flash-orange">
+            <a class="flash-exclamation">
                 Bravo !<i class="icon-thumbs-up inht"></i>
             </a>
         </div>
     </div>
-    <div class="info-scroll">4 cartes apprises jusqu'à maintenant !</div>
+    <div class="flash-message">4 cartes apprises jusqu'à maintenant !</div>
 
     </section>
 
@@ -33,11 +33,8 @@
     </section>
 
 
-    <div class="debug" style="display: none;">
-            <div class="btn-orange restore-button">Restore</div>
-            <div class="btn-orange request-fulldeck-button">Get some cards</div>
-            <div class="btn-orange request-update-button" data-stage="up">Stage Up</div>
-            <div class="btn-orange request-update-button" data-stage="down">Stage Down</div>
+    <div class="debug" {# style="display: none;" #}>
+            <div class="btn-orange flash-button">Flash !</div>
     </div>
 
     <div id="test-modal" class="modal-content">

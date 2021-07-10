@@ -62,14 +62,19 @@ const displayFlash = (message, exclamation = null, color = 'green', icon = 'thum
         exclamation = 'Bravo !'
     }
 
-    $('.flash-ctr').innerHTML = `<a class="btn-${color} flash">${exclamation} <i class="icon-${icon} inht"></i></a>`
-    $('.info-scroll').innerHTML = message
+    $('.flash-ctr').classList.add(`flash-${color}`)
+    $('.flash-ctr').innerHTML = `<a class="flash-exclamation">${exclamation} <i class="icon-${icon} inht"></i></a>`
+    $('.flash-message').innerHTML = message
 
     setTimeout(() => {
         $('.flash-ctr').classList.add('display-flash')
+        $('.flash-ctr').style.maxWidth = '100%'
+        $('.flash-message').style.maxWidth = '100%'
         setTimeout(() => {
+            $('.flash-ctr').style.maxWidth = '0%'
+            $('.flash-message').style.maxWidth = '0%'
             $('.flash-ctr').classList.remove('display-flash')
-        }, 5000)
+        }, 3000)
     }, 100)
 }
 
