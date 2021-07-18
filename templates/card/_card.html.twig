@@ -1,22 +1,22 @@
 <div class="playground-ctr stacked-cards" data-bank="{{ path('get_cards') }}">
-    <nav class="card-menu active d-ee" data-updateUrl="{{ path('stage_update') }}">
-        <div class="stage-icons d-ce">
+    <nav class="card-menu active f-ee" data-updateUrl="{{ path('stage_update') }}">
+        <div class="stage-icons f-ce">
             <i class="icon-star-fill"></i>
             <i class="icon-star-fill"></i>
             <i class="icon-star-empty"></i>
         </div>
-        <div class="edit-icons d-cc modal-trigger" data-target="test-modal"><i class="icon-closed-eye"></i></div>
-        <a href="{{ path('card_edit', {'id': card.id}) }}" class="edit-icons d-cc modal-trigger"><i class="icon-feather"></i></a>
+        <div class="edit-icons f-cc" data-target="test-modal"><i class="icon-closed-eye"></i></div>
+        <a id="edit" href="{{ path('card_edit', {'id': card.id}) }}" class="edit-icons f-cc"><i class="icon-feather"></i></a>
     </nav>
 
     <div class="card-side front moving-card">
-        <div class="content d-cc">
+        <div class="content f-cc">
             <div class="main-ctnt">{{ card.frontMaincontent }}</div>
             <div class="sub-ctnt">{{ card.frontSubcontent }}</div>
         </div>
     </div>
     <div class="card-side back">
-        <div class="content d-cc">
+        <div class="content f-cc">
             <div class="main-ctnt">{{ card.backMaincontent }}</div>
             <div class="sub-ctnt">{{ card.backSubcontent }}</div>
         </div>

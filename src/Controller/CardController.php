@@ -148,12 +148,14 @@ class CardController extends AbstractController
 
         // Form rendering
         if($request->isXmlHttpRequest()) {
-            return $this->render('card/_form.html.twig', [
-                'edit' => $card->getID() !== null,
-                'ajaxForm' => true,
-                'card' => $card,
-                'form' => $form->createView(),
-            ]);
+            return new Response(
+                $this->renderView('card/_form.html.twig', [
+                    'edit' => $card->getID() !== null,
+                    'ajaxForm' => true,
+                    'card' => $card,
+                    'form' => $form->createView(),
+                ])
+            );
         };
         return $this->render('card/edit.html.twig', [
             'edit' => $card->getID() !== null,

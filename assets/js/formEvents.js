@@ -1,4 +1,4 @@
-import { addModalEvents } from './modal'
+import { initializeModal } from './modal'
 
 /**
  * 
@@ -59,7 +59,7 @@ function addOption(taxonomyField) {
     console.log(formOption.attributes.href)
         // Trouver l'url pour le formulaire
 
-    addModalEvents(formOption, async() => {
+    initializeModal(formOption, async() => {
             let res = await fetch(formOption.attributes.href)
                 .then(res => { return res.text() })
                 .then(html => {
@@ -76,7 +76,6 @@ function addOption(taxonomyField) {
 }
 
 export default function formEvents() {
-
     updateSubCategoryInput()
     document.querySelectorAll('.option-open-form').forEach(taxonomyField => {
         addOption(taxonomyField)

@@ -10,21 +10,28 @@ import './app.scss';
 
 import handleBurger from './js/burger';
 import debugButtons from './js/debug';
-import handleModal from './js/modal';
+import handleModal, { initializeModal } from './js/modal';
 import formEvents from './js/formEvents';
-import { $, ifExist, displayFlash } from './js/utilities';
+import { $, ifExist, displayFlash, textToHTML } from './js/utilities';
 import updatePlayground from './play.js'
 
 handleBurger()
 
 window.addEventListener('load', function() {
     // Component
-    debugButtons()
-    handleModal()
+    // debugButtons()
+    // Initialisation des modals lors du chargement
+
+
+    document.querySelectorAll('.modal-trigger').forEach(trigger => {
+        console.error(['Pas de content défini !!', trigger]) // initializeModal(trigger, content)
+    })
+
+
     formEvents()
     updatePlayground()
     if ($('.flash-ctr') && $('.flash-ctr').innerHTML !== '') {
-        console.error('There is something')
+        console.error('There is a flash in the page')
     }
 })
 

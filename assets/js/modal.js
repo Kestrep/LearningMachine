@@ -1,20 +1,14 @@
+import { $, displayFlash, textToHTML } from './utilities'
+
 const openModal = (e) => {
     console.log('opening the Modal')
-    e.preventDefault()
-    e.stopImmediatePropagation()
+
 
     // Ajoute la classe modal-active au body pour prévenir la fermeture
     document.querySelector('body').classList.add('modal-active')
 
     // Créer la structure de base de la modal
-    const modal = document.createElement('div')
-    modal.classList.add('modal', 'd-cc')
-
-    const modalContainer = document.createElement('div')
-    modalContainer.classList.add('modal-ctr')
-
-    modal.appendChild(modalContainer)
-
+    const modal = textToHTML('<div class="modal f-cc"><div class="modal-ctr"></div></div>')
 
     // Ajoute la modal au <main>
     document.querySelector('main').appendChild(modal)
@@ -22,64 +16,28 @@ const openModal = (e) => {
     return modal;
 }
 
-/**
- * @return {HTMLElement}
- */
-const fetchThecontent = url => {
-
-    /**
-     * Deux types de form en modal :
-     *  Modification de la carte
-     *  Ajout d'une catégorie
-     * Modification d'une catégorie
-     */
-    let result = document.createElement('div')
-    fetch(url, {
-        method: 'POST',
-        // body: JSON.stringify(data),
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-    }).then(response => {
-        return response.text()
-    }).then(html => {
-        let parser = new DOMParser();
-        let doc = parser.parseFromString(html, 'text/html')
-        let form = doc.querySelector('form')
-
-        result.appendChild(form)
-    })
-
-    return result
-}
-
-/**
- * @param {HTMLElement} modal
- */
-const fillModal = (modal, modalContent) => {
-    modal.querySelector('.modal-ctr').appendChild(modalContent)
-    console.log('fill the modal', modalContent)
-}
-
-/**
- * Listen to close the modal if the user click outside the modal
- */
-const listenForCloseModal = (modal) => {
+const addClosingEvents = (modal, closeCallback = null) => {
     modal.addEventListener('click', (e) => {
 
-        if (modal.querySelector('.submit-button').contains(e.target)) {
-            e.preventDefault();
-            console.log('Hey !!!')
-            let form = modal.querySelector('form')
-            let url = modal.querySelector('.submit-button').dataset.url
-            console.log(url)
-            let formData = new FormData(form);
+        // Gestion des submissions
+        if (modal.querySelector('.submit-button')) {
+            if (modal.querySelector('.submit-button').contains(e.target)) {
+                e.preventDefault();
+                let form = modal.querySelector('form')
+                let url = modal.querySelector('.submit-button').dataset.url
+                console.log(url)
+                let formData = new FormData(form);
 
-            fetch(url, {
-                method: 'POST',
-                headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                body: formData
-            }).then(closeModal(modal))
-
+                fetch(url, {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    body: formData
+                }).then(
+                    closeModal(modal)
+                )
+            }
         }
+        // Fermeture si click en dehors de la modal ou sur l'élément .close-modal
         if (!modal.querySelector('.modal-ctr').contains(e.target) || modal.querySelector('.close-modal').contains(e.target)) closeModal(modal)
     })
 }
@@ -92,44 +50,31 @@ const closeModal = (modal) => {
 
 /**
  * 
- * @param {*} modalTrigger 
- * @param {*} modalContent = null
+ * @param {HTMLElement} trigger L'élément qui va déclencher la modal avec un click 
+ * @param {requestCallback} content Le contenu qui va s'afficher dans la modal
+ * @param {Callback} closeCallback Bouton de fermeture ?
  */
-export const addModalEvents = (modalTrigger, modalContent = null) => {
-    modalTrigger.addEventListener('click', e => {
-        console.log(e)
+export const initializeModal = async(trigger, content, closeCallback = null) => {
+
+
+    // display the content if Promise
+    if (typeof content === 'function') {
+        content = await content()
+    }
+
+    trigger.addEventListener('click', e => {
+
+        // let res = await content()
+        e.preventDefault()
+        e.stopImmediatePropagation()
+
+        const HTMLcontent = document.createElement('div')
+            // Créer et remplir la modale
         const modal = openModal(e)
+        console.log(modal)
+        modal.querySelector('.modal-ctr').appendChild(content)
 
-        if (modalContent && typeof modalContent === 'function') {
-            modalContent().then(res => {
-                console.log('resultat du callback', res.querySelector('form'))
-                fillModal(modal, res.querySelector('form'))
-            })
-        } else if (!modalContent && document.querySelector(`#${modalTrigger.dataset.target}`)) {
-            modalContent = document.querySelector(`#${modalTrigger.dataset.target}`)
-            fillModal(modal, modalContent)
-        } else if (!modalContent && modalTrigger.href) {
-            modalContent = fetchThecontent(modalTrigger.href)
-            fillModal(modal, modalContent)
-        }
         // const modalContent = document.querySelector(`#${trigger.dataset.target}`) ? document.querySelector(`#${trigger.dataset.target}`) : fetchThecontent(trigger.href)
-        listenForCloseModal(modal)
+        addClosingEvents(modal, closeCallback)
     })
 }
-
-
-export default function handleModal(element = null, target = null) {
-    if (!element) { element = document }
-    element.querySelectorAll('.modal-trigger').forEach(trigger => {
-        addModalEvents(trigger)
-    })
-}
-
-/**
- * A chaque modal trigger
- * J'ajoute un écouteur d'évènement
- * Je lui donne des options
- * Ce peut être le contenu
- * Ce peut être le type de contenu
- * 
- */

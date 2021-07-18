@@ -3,9 +3,6 @@
  */
 export default function debugButtons() {
 
-
-
-
     //     // ? Comment faire un truc plus propre ?
     //     if (document.querySelector('.debug .loremCopy-Button') == null) return false
     //     const loremCopyButton = document.querySelector('.debug .loremCopy-Button')
@@ -33,7 +30,7 @@ export default function debugButtons() {
     //     })
 
     // const url = 'http://127.0.0.1:8000/card/new'
-    const form = document.querySelector('form-d')
+    /* const form = document.querySelector('form')
     if (!form) return
 
     form.addEventListener('submit', e => {
@@ -49,5 +46,5 @@ export default function debugButtons() {
             headers: { 'X-Requested-With': 'XMLHttpRequest' },
             body: formData
         }).then(result => console.log(result))
-    })
+    }) */
 }
