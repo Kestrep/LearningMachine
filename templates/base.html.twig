@@ -17,7 +17,8 @@
     <body>
         {{ include('partials/header.html.twig') }}
         
-            {% block body %}{% endblock %}
+        {# On e met pas le main ici, car on risque d'avoir plusieurs dispositions différentes sur le site #}
+        {% block body %}{% endblock %}
 
         <footer></footer>
     </body>

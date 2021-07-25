@@ -52,7 +52,7 @@ class CardController extends AbstractController
         foreach($normalizedCards as $key => $value) {
 
             $localCard = $cards[$key];
-            $normalizedCards[$key] += ["html" => $this->renderView('card/_card.html.twig', [
+            $normalizedCards[$key] += ["html" => $this->renderView('card/_flashcard.html.twig', [
                 'card' => $localCard
             ])];
         }

@@ -28,7 +28,7 @@ Pour les classes html/css :
 ?    Object-
 ?    -modifier
 
-## Structure de la page html
+## Architecture de la page html
 
 Header
     _site-menu_
@@ -42,17 +42,22 @@ Main
 Footer
 Aside
 
-## Composants et Objets
+## Séparer le template des composants / objets
 
-- Flashcard (C'est un Block)
-  - ctr
-    - .side.front
-    - .side.back
-  - nav
-  - notes
+- Card :
+  - Utilisé lors du jeu
+    Flashcard fait office de container
+        nav.card-menu
+        .side-front
+        .side-back
+        .note
 
-- Showcard
-  - front
-  - separator
-  - back
-  - nav
+  - Utilisé dans l'index
+    ShowCard fait office de container - pour l'instant
+        .body
+            .content-front
+            .separator
+            .content-back
+        nav
+
+c

@@ -3,7 +3,7 @@
 {% block title %}Card index{% endblock %}
 {% block body %}
 <main>
-    <section class="header">
+    <section class="top">
         <h1>Vue d'ensemble</h1>
         <div class="info-scroll">
             Plusieurs cartes apprises ici
@@ -23,7 +23,7 @@
                 {% set category = card.subcategory.category.id %}
             {% endif %}
 
-            <div class="card-side">
+            <div class="card-side-index">
                 <nav class="menu-inside f-ec">
                     <div class="stage-icons f-ce">
                         <i class="icon-star-fill"></i>

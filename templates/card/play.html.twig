@@ -3,35 +3,31 @@
 {% block title %}Let's go !!!{% endblock %}
 
 {% block body %}
-<main class="play f-bc">
+<main class="f-bc">
     <!-- Header -->
-    <section class="header f-bc">
-    <div class="top-ctr f-bc">
-        <div class="card-breadcrumb">
-            <div class="domain"><div class="square"></div>{{ card.subCategory }}</div>
-            <div class="subdomain"><div class="square"></div>{{ card.subCategory.category }}</div>
+    <section class="top f-bc">
+        <div class="top-ctr f-bc">
+            <div class="card-breadcrumb">
+                <div class="domain"><div class="square"></div>{{ card.subCategory }}</div>
+                <div class="subdomain"><div class="square"></div>{{ card.subCategory.category }}</div>
+            </div>
+            <div class="flash-ctr flash-orange">
+                <a class="flash-exclamation">
+                    Bravo !<i class="icon-thumbs-up inht"></i>
+                </a>
+            </div>
         </div>
-        <div class="flash-ctr flash-orange">
-            <a class="flash-exclamation">
-                Bravo !<i class="icon-thumbs-up inht"></i>
-            </a>
-        </div>
-    </div>
-    <div class="flash-message">4 cartes apprises jusqu'à maintenant !</div>
-
+        <div class="flash-message">4 cartes apprises jusqu'à maintenant !</div>
     </section>
 
     <!-- Main section -->
-    <section class="main">
-
-    <div class="playground-limits">
-        {{ include('card/_card.html.twig', {card: card})}}
-    </div>
-        
+    <section class="body">
+        <div class="flashcards-ctr" data-bank="{{ path('get_cards') }}">
+            {{ include('card/_flashcard.html.twig', {card: card})}}
+        </div>
     </section>
     <section class="footer">
     </section>
-
 
     <div class="debug" {# style="display: none;" #}>
             <div class="btn-orange flash-button">Flash !</div>

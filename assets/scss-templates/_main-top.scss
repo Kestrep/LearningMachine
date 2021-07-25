@@ -1,0 +1,41 @@
+main {
+    flex-direction: column;
+    // HEADER
+    .top {
+        flex-wrap: wrap;
+        .top-ctr {
+            position: relative;
+            width: 100%;
+        }
+    }
+    .square {
+        display: inline-block;
+        top: 50%;
+        left: 0;
+        height: 4px;
+        width: 4px;
+        margin: 4px;
+        background-color: $orange;
+    }
+    .card-breadcrumb {
+        .domain,
+        .subdomain {
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        .subdomain {
+            margin-left: $gutter;
+            font-size: 1rem;
+        }
+    }
+    // TODO: Supprimer
+    .info-scroll {
+        flex-basis: 100%;
+        flex-shrink: 0;
+        color: $orange;
+        font-weight: 200;
+        font-size: 0.8rem;
+        text-decoration: underline;
+        text-align: right;
+    }
+}
