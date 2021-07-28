@@ -11,7 +11,7 @@ import './app.scss';
 import handleBurger from './js/burger';
 import debugButtons from './js/debug';
 import handleModal, { initializeModal } from './js/modal';
-import formEvents from './js/formEvents';
+import addFormEvents from './js/formEvents';
 import { $, ifExist, displayFlash, textToHTML } from './js/utilities';
 import updatePlayground from './play.js'
 
@@ -22,14 +22,13 @@ window.addEventListener('load', function() {
     // debugButtons()
     // Initialisation des modals lors du chargement
 
-
     document.querySelectorAll('.modal-trigger').forEach(trigger => {
         console.error(['Pas de content défini !!', trigger]) // initializeModal(trigger, content)
     })
 
+    if ($('form')) addFormEvents($('form'))
 
-    formEvents()
-    updatePlayground()
+    if ($('flaschcards.ctr')) updatePlayground()
     if ($('.flash-ctr') && $('.flash-ctr').innerHTML !== '') {
         console.error('There is a flash in the page')
     }
@@ -38,6 +37,9 @@ window.addEventListener('load', function() {
 // start the Stimulus application
 // import './bootstrap';
 
-$('.flash-button').addEventListener('click', () => {
-    displayFlash('Il est important de debugger', 'Coucou', 'orange', 'feather')
-})
+if ($('.flash-button')) {
+    console.log($('.flash-button'))
+    $('.flash-button').addEventListener('click', () => {
+        displayFlash('Il est important de debugger', 'Coucou', 'orange', 'feather')
+    })
+}

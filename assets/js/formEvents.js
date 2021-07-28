@@ -1,83 +1,100 @@
-import { initializeModal } from './modal'
+import { $, textToHTML } from './utilities'
+import { displayModal } from './modal'
 
 /**
- * 
- * @returns 
+ * Actualise l'évènement lié à l'update de la sous-catégorie lors d'une modification d'une catégorie
  */
-function updateSubCategoryInput() {
+function addUpdateEvent(form) {
     // TODO : supprimer
-    const partialUrl = 'http://127.0.0.1:8000/card/new/ajax/getSubCategory/' // Ajouter l'ID
-    const categoryInput = document.querySelector('#card_category')
-    const subCategoryInput = document.querySelector('#card_subCategory')
+    const categorySelect = $('#card_category', form)
+    const subCategorySelect = $('#card_subCategory', form)
 
     // Vérifie qu'on est dans le formulaire
-    if (categoryInput == null || subCategoryInput == null) return
+    if (categorySelect == null || subCategorySelect == null) return
 
-    categoryInput.addEventListener('change', e => {
 
-        // Vérifie qu'on est sur une catégorie
+    categorySelect.addEventListener('change', e => {
+        // Vérifie qu'on est sur une catégorie déjà existante
         if (e.target.value === "Ajouter une catégorie") return
 
+        const subcatUrl = $('#card_category', form).dataset.getsubcategoriesurl
+
         // Va chercher les subcategories correspondantes
-        fetch(partialUrl + e.target.value).then(result => result.json()).then(objects => {
+        fetch(subcatUrl, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                id: e.target.value
+            })
+        }).then(result => result.json()).then(objects => {
             console.log(objects)
-            subCategoryInput.innerHTML = ''
+            subCategorySelect.innerHTML = ''
 
             // Ajoute les options au select
             objects.forEach(obj => {
                 const optionElement = document.createElement('option')
                 optionElement.value = obj.id
                 optionElement.innerText = obj.name
-                subCategoryInput.append(optionElement)
+                subCategorySelect.append(optionElement)
             })
-
-            // Ajoute l'option 'Add new catégorie'
-            addOption(subCategoryInput)
+            addNewTaxonomyOption(subCategorySelect)
         })
     })
 }
 
 
 /**
- * Ajoute une l'option 'Ajouter une catégorie au select'
- * @param {*} element 
+ * Ajoute une l'option 'Ajouter une option "Nouvelle catégorie" et lier la modale de création de taxonomie au champ de formulaire'
+ * @param {HTMLElement} taxonomyField Le select auquel ajouter l'option 'Créer nouvelle catégorie ou Sous-catégorie 
  */
-function addOption(taxonomyField) {
+function addNewTaxonomyOption(taxonomyField) {
 
-    let formOption = document.createElement('option')
+    const newOption = textToHTML('<option class="form-button">Ajouter une catégorie</option>')
 
-    formOption.textContent = "Ajouter une catégorie"
-    formOption.classList.add('form-button', 'modal-trigger')
-        // définit l'url
-    formOption.attributes.href = taxonomyField.dataset.target
-        // Trouver l'ID de la catégorie en cours
+    // Trouver l'ID de la catégorie en cours // TODO : Si nouvelle subcategory, alors on prérempli la catégorie
     let categoryId = taxonomyField.closest('form').querySelector('#card_category').value
-    if (taxonomyField.id === 'card_subCategory') {
-        formOption.attributes.href += '/' + categoryId
-    }
 
-    console.log(formOption.attributes.href)
-        // Trouver l'url pour le formulaire
+    // Url du formulaire pour la catégorie  ou la sous catégorie
+    let url = taxonomyField.dataset.newurl
 
-    initializeModal(formOption, async() => {
-            let res = await fetch(formOption.attributes.href)
-                .then(res => { return res.text() })
-                .then(html => {
-                    let parser = new DOMParser();
-                    let doc = parser.parseFromString(html, 'text/html')
-                    return doc
-                })
-            return res
+    // TODO : changer le newurl - ne veut rien dire
+    newOption.addEventListener('click', async() => {
+        // If the taxonomyField is sub_category, get the category value and add it to the url
+        if (taxonomyField.id === 'card_subCategory') {
+            url = url + '/' + categoryId
+            console.log(url)
+
+        }
+
+        // Go fetch the form
+        let form = await fetch(url, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        }).then(async(res) => {
+            let result = await res.text()
+            result = textToHTML(result)
+            return result
         })
-        // Ajoute l'élément au options
-    taxonomyField.appendChild(formOption)
-        // l'option doit avoir un data-target
+        displayModal(form)
+    })
 
+    // Ajoute l'élément au options
+    taxonomyField.appendChild(newOption)
+
+    // l'option doit avoir un data-target
 }
 
-export default function formEvents() {
-    updateSubCategoryInput()
-    document.querySelectorAll('.option-open-form').forEach(taxonomyField => {
-        addOption(taxonomyField)
+
+
+/**
+ * 
+ * @param {HTMLElement} form Formulaire sur lequel ajouter les évènements de formulaire 
+ */
+export default function addFormEvents(form) {
+    addUpdateEvent(form)
+    form.querySelectorAll('.js-taxonomy-field').forEach(taxonomyField => {
+        addNewTaxonomyOption(taxonomyField)
     })
 }

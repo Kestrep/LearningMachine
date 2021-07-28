@@ -1,7 +1,6 @@
 /**
  * Retourne le résultat de la sélection sour forme de tableau s'il y a plusieurs éléments, sous forme d'élément HTML s'il n'y a qu'un élément
- * @param {*} selector 
- * @param {*} selector 
+ * @param {String} selector 
  */
 const $ = (selector, container = null, log = false) => {
 
@@ -14,6 +13,8 @@ const $ = (selector, container = null, log = false) => {
 
     if (nodeList.length === 1) {
         return nodeList[0]
+    } else if (nodeList.length === 0) {
+        return null
     }
 
     return nodeList;

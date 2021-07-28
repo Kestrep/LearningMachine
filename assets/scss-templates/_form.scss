@@ -1,15 +1,15 @@
-label, textarea, input, select {
+label,
+textarea,
+input,
+select {
     display: block;
     width: 100%;
     padding: $gutter /4;
-
     border: transparent;
     outline: none;
-
     font-family: $montserrat;
     font-size: 1rem;
     line-height: 1.2rem;
-
     &:invalid {
         outline: transparent;
         border: none;
@@ -28,12 +28,10 @@ label, textarea, input, select {
 }
 
 label {
-
     margin-top: $gutter;
     margin-bottom: $gutter / 4;
     color: $orange;
     text-transform: uppercase;
-
     &::first-letter {
         font-size: 1.2em;
     }

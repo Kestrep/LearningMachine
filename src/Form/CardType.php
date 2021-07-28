@@ -31,12 +31,12 @@ class CardType extends AbstractType
         $builder
             ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'attr' => ['class' => 'option-open-form']
+                'attr' => ['class' => 'js-taxonomy-field']
             ])
             ->add('subCategory', EntityType::class, [
                 'class' => SubCategory::class,
                 'choice_label' => 'name',
-                'attr' => ['class' => 'option-open-form']
+                'attr' => ['class' => 'js-taxonomy-field']
             ])
             ->add('front_maincontent', TextareaType::class)
             ->add('front_subcontent', TextareaType::class)
@@ -64,7 +64,7 @@ class CardType extends AbstractType
             $card = $event->getData();
             $form->add('category', EntityType::class, [
                 'class' => Category::class,
-                'attr' => ['class' => 'option-open-form'],
+                'attr' => ['class' => 'js-taxonomy-field'],
                 // On veut les catégories par ordre alphabétique, mais que ce soit la dernière catégorie qui soit automatiquement sélectionnée
                 'choices' => $this->categoryRepository->findAllFromCurrentUser(),
                 'choice_label' => 'name',
@@ -78,7 +78,7 @@ class CardType extends AbstractType
 
             $form->add('subCategory', EntityType::class, [
                 'class' => SubCategory::class,
-                'attr' => ['class' => 'option-open-form'],
+                'attr' => ['class' => 'js-taxonomy-field'],
                 'choice_label' => 'name',
                 'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($form->get('category')->getData()),
             ]);

@@ -167,16 +167,6 @@ class CardController extends AbstractController
     }
 
     /**
-     * @Route("/new/ajax/getSubCategory/{id}", name="card_new_ajax_subcategory", methods={"GET"})
-     */
-    public function getSubCategoryFromCategory(Request $request, SubCategoryRepository $subCategoryRepository, Category $category) :Response
-    {
-        $subcategories = $subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($category);
-        
-        return $this->json($subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($category), 200, [], ['groups' => 'subCategory:list']);
-    }
-
-    /**
      * @Route("/{id}", name="card_show", methods={"GET"})
      */
     public function show(Card $card): Response

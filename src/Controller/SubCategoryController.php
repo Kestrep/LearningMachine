@@ -56,7 +56,7 @@ class SubCategoryController extends AbstractController
             return $this->redirectToRoute('sub_category_index');
         }
 
-        return $this->render('sub_category/new.html.twig', [
+        return $this->render('sub_category/_form.html.twig', [
             'sub_category' => $subCategory,
             'form' => $form->createView(),
         ]);

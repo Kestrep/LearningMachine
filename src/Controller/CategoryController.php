@@ -6,11 +6,14 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\SubCategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/category")
@@ -27,6 +30,18 @@ class CategoryController extends AbstractController
             'categories' => $categoryRepository->findAll(),
         ]);
     }
+
+    /**
+     * @Route("/getSubcategories/", name="get_relative_subcategories", methods={"POST"})
+     */
+    public function getRelativeSubcategories(SubCategoryRepository $subcategoryRepository, NormalizerInterface $normalizer, Request $request ): Response
+    {
+
+        $categoryID = json_decode($request->getContent(), true);
+        return $this->json($subcategoryRepository->findAllFromGivenCategoryFromCurrentUser($categoryID), 200, [], ['groups' => 'subCategory:list']);
+    }
+
+
 
     /**
      * @Route("/new", name="category_new", methods={"GET","POST"})
@@ -48,7 +63,17 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('category_index');
         }
 
-        return $this->render('category/_form.html.twig', [
+        // Form rendering
+        if($request->isXmlHttpRequest()) {
+            return new Response(
+                $this->renderView('category/_form.html.twig', [
+                    'category' => $category,
+                    'form' => $form->createView(),
+                ])
+            );
+        };
+
+        return $this->render('category/new.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);

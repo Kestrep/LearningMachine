@@ -1,6 +1,6 @@
 import { $, displayFlash, textToHTML } from './utilities'
 
-const openModal = (e) => {
+const openModal = () => {
     console.log('opening the Modal')
 
 
@@ -50,28 +50,38 @@ const closeModal = (modal) => {
 
 /**
  * 
+ * @param {HTMLElement} content The content to display inside the modal
+ */
+export const displayModal = (content) => {
+    console.log(content)
+    const modal = openModal()
+    console.log(modal.querySelector('.modal-ctr'))
+    modal.querySelector('.modal-ctr').appendChild(content)
+
+    addClosingEvents(modal)
+}
+
+/**
+ * 
  * @param {HTMLElement} trigger L'élément qui va déclencher la modal avec un click 
  * @param {requestCallback} content Le contenu qui va s'afficher dans la modal
  * @param {Callback} closeCallback Bouton de fermeture ?
  */
 export const initializeModal = async(trigger, content, closeCallback = null) => {
-
+    console.error('DEPRECATED - a function use the deprecated initializeModal')
 
     // display the content if Promise
     if (typeof content === 'function') {
-        content = await content()
+        let result = await content()
+            // console.log(result)
     }
 
     trigger.addEventListener('click', e => {
-
-        // let res = await content()
         e.preventDefault()
         e.stopImmediatePropagation()
 
-        const HTMLcontent = document.createElement('div')
-            // Créer et remplir la modale
+        // Créer et remplir la modale
         const modal = openModal(e)
-        console.log(modal)
         modal.querySelector('.modal-ctr').appendChild(content)
 
         // const modalContent = document.querySelector(`#${trigger.dataset.target}`) ? document.querySelector(`#${trigger.dataset.target}`) : fetchThecontent(trigger.href)
