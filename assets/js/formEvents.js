@@ -85,7 +85,6 @@ function addNewTaxonomyOption(taxonomyField) {
         displayModal(form, () => {
             // Refresh
             location.reload();
-            console.log('Here')
 
         })
     })

@@ -8,6 +8,7 @@ use App\Entity\Category;
 use App\Repository\CardRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\SubCategoryRepository;
+use DateInterval;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,6 +45,9 @@ class CardController extends AbstractController
         }
 
         $cards = $cardRepository->findUserCards($parameters['count'], $parameters['idList']);
+        
+        // Faire remonter les cartes à jouer en fonction de leur date de remise en jeu
+        
         $normalizedCards = $normalizer->normalize($cards, null, [
             'groups' => 'card:read'
         ]);
@@ -72,6 +76,8 @@ class CardController extends AbstractController
 
         $card = $cardRepository->find($data['id']);
 
+        $old_date = $card->getPlayAt();
+
         $currentStage = $card->getStage();
         if($data['action'] === 'stage-up') {
             $card->setStage($currentStage + 1);
@@ -80,7 +86,28 @@ class CardController extends AbstractController
             $card->setStage($currentStage - 1);
             $message = "On va faire descendre la pression !";
         }
-        
+
+        $parameters = [
+            0 => 'P1D',
+            1 => 'P3D',
+            2 => 'P1W',
+            3 => 'P2W',
+            4 => 'P1M',
+            5 => 'P3M',
+            6 => 'P6M',
+            7 => 'P12M'
+        ];
+
+        // On modifie la date en fonction de la valeur du stage après sa modification
+        foreach ($parameters as $key => $value) {
+            if($card->getStage() === $key) {
+
+                $today = new \DateTime();
+                $interval = new \DateInterval($value);
+                $card->setPlayAt($today->add($interval));
+            }
+        }
+
         $em->persist($card);
         $em->flush();
 
@@ -163,7 +190,6 @@ class CardController extends AbstractController
             'card' => $card,
             'form' => $form->createView(),
         ]);
-
     }
 
     /**

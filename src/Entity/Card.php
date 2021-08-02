@@ -73,6 +73,11 @@ class Card
      */
     private $subCategory;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $play_at;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -194,6 +199,18 @@ class Card
     public function setSubCategory(?SubCategory $subCategory): self
     {
         $this->subCategory = $subCategory;
+
+        return $this;
+    }
+
+    public function getPlayAt(): ?\DateTimeInterface
+    {
+        return $this->play_at;
+    }
+
+    public function setPlayAt(\DateTimeInterface $play_at): self
+    {
+        $this->play_at = $play_at;
 
         return $this;
     }

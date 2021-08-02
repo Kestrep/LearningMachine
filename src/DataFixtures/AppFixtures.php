@@ -65,9 +65,12 @@ class AppFixtures extends Fixture
 
                     for ($l = 0; $l < mt_rand(2, 4); $l++) {
                         $card = new Card();
+
+                        $temp_date = $faker->dateTimeBetween('-1 week', 'now');
             
                         $card
-                            ->setCreatedAt($faker->dateTimeBetween('-1 week', 'now'))
+                            ->setCreatedAt($temp_date)
+                            ->setPlayAt($temp_date)
                             ->setFrontMainContent($faker->sentence(mt_rand(2, 3)))
                             ->setFrontSubcontent($faker->sentence(mt_rand(4, 7)))
                             ->setBackMainContent($faker->sentence(mt_rand(2, 3)))
@@ -75,7 +78,7 @@ class AppFixtures extends Fixture
                             ->setFrontClue($faker->sentence(mt_rand(2, 3)))
                             ->setBackClue($faker->sentence(mt_rand(2, 3)))
                             ->setNote($faker->sentence(mt_rand(8, 12)))
-                            ->setStage(mt_rand(0, 7));
+                            ->setStage(mt_rand(0, 6));
                         
                         $subCategory->addCard($card);
                         $manager->persist($card);

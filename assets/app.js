@@ -28,7 +28,10 @@ window.addEventListener('load', function() {
 
     if ($('form')) addFormEvents($('form'))
 
-    if ($('flaschcards.ctr')) updatePlayground()
+    if ($('.flashcards-ctr')) {
+        console.log('Here')
+        updatePlayground()
+    }
     if ($('.flash-ctr') && $('.flash-ctr').innerHTML !== '') {
         console.error('There is a flash in the page')
     }

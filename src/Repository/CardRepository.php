@@ -41,7 +41,7 @@ class CardRepository extends ServiceEntityRepository
                     ->setParameter('idList', $idList)
                     // ->setFirstResult(50)
                     ->setMaxResults($count)
-                    ->orderBy('c.createdAt', 'ASC')
+                    ->orderBy('c.play_at', 'ASC')
                     ->getQuery()
                     ->getResult()
                     ;
