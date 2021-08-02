@@ -16,7 +16,7 @@ const openModal = () => {
     return modal;
 }
 
-const addClosingEvents = (modal, closeCallback = null) => {
+const addClosingEvents = (modal, callbackOnClose = null) => {
     modal.addEventListener('click', (e) => {
 
         // Gestion des submissions
@@ -32,9 +32,12 @@ const addClosingEvents = (modal, closeCallback = null) => {
                     method: 'POST',
                     headers: { 'X-Requested-With': 'XMLHttpRequest' },
                     body: formData
-                }).then(
+                }).then(res => res.json()).then(res => {
+                    console.log(res)
+                    displayFlash(res.message, res.exclamation, res.color, res.icon)
                     closeModal(modal)
-                )
+                    callbackOnClose()
+                })
             }
         }
         // Fermeture si click en dehors de la modal ou sur l'élément .close-modal
@@ -52,13 +55,13 @@ const closeModal = (modal) => {
  * 
  * @param {HTMLElement} content The content to display inside the modal
  */
-export const displayModal = (content) => {
+export const displayModal = (content, callbackOnClose = null) => {
     console.log(content)
     const modal = openModal()
     console.log(modal.querySelector('.modal-ctr'))
     modal.querySelector('.modal-ctr').appendChild(content)
 
-    addClosingEvents(modal)
+    addClosingEvents(modal, callbackOnClose)
 }
 
 /**

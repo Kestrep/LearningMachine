@@ -47,12 +47,20 @@ class SubCategoryController extends AbstractController
             $subCategory->setUpdatedAt(new \DateTime());
 
             // TODO Ajouter une categorie anonyme en cas de non sélection
-            $categories = $this->getUser()->getCategories();
-            $subCategory->setCategory($categories[0]);
+            // $categories = $this->getUser()->getCategories();
+            // $subCategory->setCategory($categories[0]);
 
             $em->persist($subCategory);
             $em->flush();
 
+            if($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'message' => 'La sous-catégorie a bien été crée',
+                    'exclamation' => 'Hey !',
+                    'color' => 'orange',
+                    'icon' => 'feather',
+                ], 201);
+            };
             return $this->redirectToRoute('sub_category_index');
         }
 

@@ -31,7 +31,7 @@ class CategoryRepository extends ServiceEntityRepository
                     ->join('c.user', 'u')
                     ->where('u = :user')
                     ->setParameter('user', $this->currentUser)
-                    ->setMaxResults(5)
+                    // ->setMaxResults(5)
                     ->orderBy('c.updatedAt', 'DESC')
                     ->getQuery()
                     ->getResult()

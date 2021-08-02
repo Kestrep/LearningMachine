@@ -32,6 +32,15 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * @Route("/getCategories/", name="get_categories", methods={"POST"})
+     */
+    public function getCategories(CategoryRepository $categoryRepository) {
+        $categories = $categoryRepository->findAllFromCurrentUser();
+
+        return $this->json($categories, 200, [], ['group' => 'Category:list']);
+    }
+
+    /**
      * @Route("/getSubcategories/", name="get_relative_subcategories", methods={"POST"})
      */
     public function getRelativeSubcategories(SubCategoryRepository $subcategoryRepository, NormalizerInterface $normalizer, Request $request ): Response
@@ -60,6 +69,14 @@ class CategoryController extends AbstractController
             $em->persist($category);
             $em->flush();
 
+            if($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'message' => 'La catégorie a bien été crée',
+                    'exclamation' => 'Hey !',
+                    'color' => 'orange',
+                    'icon' => 'feather',
+                ], 201);
+            };
             return $this->redirectToRoute('category_index');
         }
 

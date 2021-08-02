@@ -15,7 +15,7 @@ function addUpdateEvent(form) {
 
     categorySelect.addEventListener('change', e => {
         // Vérifie qu'on est sur une catégorie déjà existante
-        if (e.target.value === "Ajouter une catégorie") return
+        if (e.target.value === "Ajouter une catégorie" || e.target.value === "Ajouter une sous-catégorie") return
 
         const subcatUrl = $('#card_category', form).dataset.getsubcategoriesurl
 
@@ -52,32 +52,42 @@ function addUpdateEvent(form) {
  */
 function addNewTaxonomyOption(taxonomyField) {
 
-    const newOption = textToHTML('<option class="form-button">Ajouter une catégorie</option>')
-
-    // Trouver l'ID de la catégorie en cours // TODO : Si nouvelle subcategory, alors on prérempli la catégorie
-    let categoryId = taxonomyField.closest('form').querySelector('#card_category').value
-
-    // Url du formulaire pour la catégorie  ou la sous catégorie
-    let url = taxonomyField.dataset.newurl
+    let newOption = ''
+    if (taxonomyField.id === 'card_subCategory') {
+        newOption = textToHTML('<option class="form-button">Ajouter une sous-catégorie</option>')
+    } else if (taxonomyField.id === 'card_category') {
+        newOption = textToHTML('<option class="form-button">Ajouter une catégorie</option>')
+    }
 
     // TODO : changer le newurl - ne veut rien dire
     newOption.addEventListener('click', async() => {
+        // Trouver l'ID de la catégorie en cours // TODO : Si nouvelle subcategory, alors on prérempli la catégorie
+        let categoryId = taxonomyField.closest('form').querySelector('#card_category').value
+
+        // Url du formulaire pour la catégorie  ou la sous catégorie
+        let url = taxonomyField.dataset.newurl
+
         // If the taxonomyField is sub_category, get the category value and add it to the url
         if (taxonomyField.id === 'card_subCategory') {
             url = url + '/' + categoryId
             console.log(url)
-
         }
 
         // Go fetch the form
         let form = await fetch(url, {
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        }).then(async(res) => {
-            let result = await res.text()
-            result = textToHTML(result)
-            return result
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(async(res) => {
+                let result = await res.text()
+                result = textToHTML(result)
+                return result
+            })
+            // Display the form in the modal
+        displayModal(form, () => {
+            // Refresh
+            location.reload();
+            console.log('Here')
+
         })
-        displayModal(form)
     })
 
     // Ajoute l'élément au options

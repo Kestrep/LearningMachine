@@ -63,6 +63,10 @@ const displayFlash = (message, exclamation = null, color = 'green', icon = 'thum
         exclamation = 'Bravo !'
     }
 
+    if (!$('.flash-ctr')) {
+        console.error('IL N4Y A PAS DE FLASH CONTAINER !!!')
+        return
+    }
     $('.flash-ctr').classList.add(`flash-${color}`)
     $('.flash-ctr').innerHTML = `<a class="flash-exclamation">${exclamation} <i class="icon-${icon} inht"></i></a>`
     $('.flash-message').innerHTML = message

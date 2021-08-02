@@ -1,9 +1,13 @@
 {{ form_start(form) }}
     {{ form_row(form.category, { 'attr': {
         'data-newUrl': path('category_new'),
+        'data-getUrl': path('get_categories'),
         'data-getSubcategoriesUrl': path('get_relative_subcategories')
     }}) }}
-    {{ form_row(form.subCategory, { 'attr': {'data-newUrl': path('sub_category_new') }}) }}
+    {{ form_row(form.subCategory, { 'attr': {
+        'data-newUrl': path('sub_category_new'),
+        'data-getUrl': path('get_relative_subcategories'),
+        }}) }}
     {{ form_widget(form) }}
     <div class="buttons f-cc">
         <div class="btn-darkgrey {% if ajaxForm %}close-modal">Fermer la fenêtre{% else %}">Revenir{% endif %}</div>

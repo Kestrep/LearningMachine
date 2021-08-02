@@ -19,8 +19,8 @@ handleBurger()
 
 window.addEventListener('load', function() {
     // Component
-    // debugButtons()
-    // Initialisation des modals lors du chargement
+    debugButtons()
+        // Initialisation des modals lors du chargement
 
     document.querySelectorAll('.modal-trigger').forEach(trigger => {
         console.error(['Pas de content défini !!', trigger]) // initializeModal(trigger, content)
