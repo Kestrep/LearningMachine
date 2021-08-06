@@ -119,6 +119,7 @@ class CardController extends AbstractController
         ], 201, [], ['groups' => 'card:read']);
     }
 
+    // TODO Revoir cette partie
     /**
      * @Route("/play", name="card_play", methods={"GET"})
      */
@@ -184,21 +185,11 @@ class CardController extends AbstractController
                 ])
             );
         };
-        return $this->render('card/edit.html.twig', [
+        return $this->render('card/form.html.twig', [
             'edit' => $card->getID() !== null,
             'ajaxForm' => false,
             'card' => $card,
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="card_show", methods={"GET"})
-     */
-    public function show(Card $card): Response
-    {
-        return $this->render('card/show.html.twig', [
-            'card' => $card,
         ]);
     }
 

@@ -21,15 +21,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class CategoryController extends AbstractController
 {
-    /**
-     * @Route("/", name="category_index", methods={"GET"})
-     */
-    public function index(CategoryRepository $categoryRepository): Response
-    {
-        return $this->render('category/index.html.twig', [
-            'categories' => $categoryRepository->findAll(),
-        ]);
-    }
 
     /**
      * @Route("/getCategories/", name="get_categories", methods={"POST"})
@@ -54,17 +45,27 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/new", name="category_new", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="category_edit", methods={"GET","POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, Category $category = null, EntityManagerInterface $em): Response
     {
-        $category = new Category();
+        // Vérification du user et création de la category s'il n'y a pas de category
+        if($category && $category->getUser() !== $this->getUser()) {
+            return $this->redirectToRoute('card_index');
+        } else if(!$category) {
+            $category = new Category();
+        }
+
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $category->setCreatedAt(new \DateTime());
+            // Si nouvelle category
+            if($category->getID() == null) {
+                $category->setUser($this->getUser());
+                $category->setCreatedAt(new \DateTime());
+            }
             $category->setUpdatedAt(new \DateTime());
-            $category->setUser($this->getUser());
 
             $em->persist($category);
             $em->flush();
@@ -90,37 +91,8 @@ class CategoryController extends AbstractController
             );
         };
 
-        return $this->render('category/new.html.twig', [
-            'category' => $category,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="category_show", methods={"GET"})
-     */
-    public function show(Category $category): Response
-    {
-        return $this->render('category/show.html.twig', [
-            'category' => $category,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="category_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Category $category, EntityManagerInterface $em): Response
-    {
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-
-            return $this->redirectToRoute('category_index');
-        }
-
-        return $this->render('category/edit.html.twig', [
+        return $this->render('category/form.html.twig', [
+            'edit' => $category->getID() !== null,
             'category' => $category,
             'form' => $form->createView(),
         ]);

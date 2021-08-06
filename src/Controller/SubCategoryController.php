@@ -13,20 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/sub/category")
+ * @Route("/subcategory")
  */
 class SubCategoryController extends AbstractController
 {
-    /**
-     * @Route("/", name="sub_category_index", methods={"GET"})
-     */
-    public function index(SubCategoryRepository $subCategoryRepository): Response
-    {
-        return $this->render('sub_category/index.html.twig', [
-            'sub_categories' => $subCategoryRepository->findAll(),
-        ]);
-    }
-
+    // TODO : find a way to merge new and edit
     /**
      * @Route("/new/{category}", name="sub_category_new", methods={"GET","POST"})
      */
@@ -71,16 +62,6 @@ class SubCategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="sub_category_show", methods={"GET"})
-     */
-    public function show(SubCategory $subCategory): Response
-    {
-        return $this->render('sub_category/show.html.twig', [
-            'sub_category' => $subCategory,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="sub_category_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, SubCategory $subCategory, EntityManagerInterface $em): Response
@@ -94,12 +75,13 @@ class SubCategoryController extends AbstractController
             return $this->redirectToRoute('sub_category_index');
         }
 
-        return $this->render('sub_category/edit.html.twig', [
+        return $this->render('sub_category/form.html.twig', [
+            'edit' => $subCategory !== null,
             'sub_category' => $subCategory,
             'form' => $form->createView(),
         ]);
     }
-
+    
     /**
      * @Route("/{id}", name="sub_category_delete", methods={"POST"})
      */

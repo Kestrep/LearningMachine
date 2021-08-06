@@ -76,7 +76,7 @@ class Card
     /**
      * @ORM\Column(type="datetime")
      */
-    private $play_at;
+    private $playAt;
 
     public function getId(): ?int
     {
@@ -205,12 +205,12 @@ class Card
 
     public function getPlayAt(): ?\DateTimeInterface
     {
-        return $this->play_at;
+        return $this->playAt;
     }
 
-    public function setPlayAt(\DateTimeInterface $play_at): self
+    public function setPlayAt(\DateTimeInterface $playAt): self
     {
-        $this->play_at = $play_at;
+        $this->playAt = $playAt;
 
         return $this;
     }
