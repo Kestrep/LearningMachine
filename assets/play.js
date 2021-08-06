@@ -181,20 +181,22 @@ const handleCard = async(card, order = 'fail') => {
  * @param {Object} card La carte en entier
  */
 function addMenuEvents(card) {
-    /**
-     * Bouton 'Modifier la carte en cours'
-     */
-    initializeModal($('#edit', card.html), async() => {
-        const url = $('#edit', card.html).href
-        let result = await fetch(url, {
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        }).then(async(res) => {
-            let result = await res.text()
-            result = textToHTML(result)
-            return result
-        })
-        return result
-    })
+
+    // ? For the first release, this feature is removed
+    // /**
+    //  * Bouton 'Modifier la carte en cours'
+    //  */
+    // initializeModal($('#edit', card.html), async() => {
+    //     const url = $('#edit', card.html).href
+    //     let result = await fetch(url, {
+    //         headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    //     }).then(async(res) => {
+    //         let result = await res.text()
+    //         result = textToHTML(result)
+    //         return result
+    //     })
+    //     return result
+    // })
 
 }
 

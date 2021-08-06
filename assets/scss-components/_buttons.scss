@@ -1,34 +1,28 @@
-button, [class^="btn"] {
+button,
+[class^="btn"] {
     position: relative;
     display: block;
     margin: $gutter / 2;
     padding: $gutter / 1.5;
-
     user-select: none;
-
     border-radius: 8px;
-
     // Normalize
     outline: none;
     border: none;
     font-size: 1rem;
     font-family: $montserrat;
-
     &:before {
         content: '';
         position: absolute;
         left: 50%;
         bottom: 5px;
         transform: translateX(-50%) scaleX(0);
-
         height: 1px;
         width: 80%;
-
         transition: 0.3s ease-out;
-
     }
-
-    &:hover::before, &:focus::before {
+    &:hover::before,
+    &:focus::before {
         transform: translateX(-50%) scaleX(1);
     }
 }
@@ -36,7 +30,6 @@ button, [class^="btn"] {
 .btn-orange {
     background-color: $orange;
     color: $black;
-
     &::before {
         background-color: $black;
     }
@@ -45,7 +38,6 @@ button, [class^="btn"] {
 .btn-green {
     background-color: $green;
     color: $white;
-
     &::before {
         background-color: $white;
     }
@@ -54,7 +46,14 @@ button, [class^="btn"] {
 .btn-darkgrey {
     background-color: $darkgrey;
     color: $white;
+    &::before {
+        background-color: $white;
+    }
+}
 
+.btn-red {
+    background-color: $red;
+    color: $white;
     &::before {
         background-color: $white;
     }

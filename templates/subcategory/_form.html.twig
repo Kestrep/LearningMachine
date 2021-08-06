@@ -1,4 +1,9 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn-orange submit-button" data-url="{{ path('subcategory_new') }}">{{ button_label|default('Save') }}</button>
+    <div class="buttons f-cc">
+        {% if edit %}
+            <a href="{{ path('subcategory_delete', {'id': subcategory.id, 'token': csrf_token('delete' ~ subcategory.id)}) }}" class="btn-red" onclick="return confirm('Are you sure you want to delete this item?');">Supprimer la sous-catégorie</a>
+        {% endif %}
+        <button class="btn-orange submit-button" data-url="{{ path('subcategory_new') }}">Sauvegarder</button>
+    </div>
 {{ form_end(form) }}

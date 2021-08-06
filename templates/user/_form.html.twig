@@ -1,4 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="buttons f-cc">
+        <a href="{{ path('app_login') }}" class="btn-darkgrey">Déjà un compte ?</a>
+        <button class="btn-orange">{{ button_label|default('S\'enregistrer') }}</button>
+    </div>
 {{ form_end(form) }}

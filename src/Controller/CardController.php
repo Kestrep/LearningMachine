@@ -194,11 +194,11 @@ class CardController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="card_delete", methods={"POST"})
+     * @Route("/{id}", name="card_delete", methods={"GET"})
      */
     public function delete(Request $request, Card $card): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$card->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$card->getId(), $request->query->get('token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($card);
             $entityManager->flush();

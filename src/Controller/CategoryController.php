@@ -95,15 +95,18 @@ class CategoryController extends AbstractController
             'edit' => $category->getID() !== null,
             'category' => $category,
             'form' => $form->createView(),
+            'options' => [
+                'pageTitle' => 'Modifier la page'
+            ]
         ]);
     }
 
     /**
-     * @Route("/{id}", name="category_delete", methods={"POST"})
+     * @Route("/{id}", name="category_delete", methods={"GET"})
      */
     public function delete(Request $request, Category $category): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->query->get('token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($category);
             $entityManager->flush();

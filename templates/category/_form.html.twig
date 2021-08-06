@@ -1,5 +1,9 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <div class="btn-darkgrey close-modal">Fermer</div>
-    <button class="btn-orange submit-button" data-url="{{ path('category_new') }}">{{ button_label|default('Save') }}</button>
+    <div class="buttons f-cc">
+        {% if edit %}
+            <a href="{{ path('category_delete', {'id': category.id, 'token': csrf_token('delete' ~ category.id)}) }}" class="btn-red" onclick="return confirm('Are you sure you want to delete this item?');">Supprimer la catégorie</a>
+        {% endif %}
+        <button class="btn-orange submit-button" data-url="{{ path('category_new') }}">Sauvegarder</button>
+    </div>
 {{ form_end(form) }}

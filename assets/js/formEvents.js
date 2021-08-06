@@ -30,7 +30,6 @@ function addUpdateEvent(form) {
                 id: e.target.value
             })
         }).then(result => result.json()).then(objects => {
-            console.log(objects)
             subcategorySelect.innerHTML = ''
 
             // Ajoute les options au select
@@ -40,7 +39,9 @@ function addUpdateEvent(form) {
                 optionElement.innerText = obj.name
                 subcategorySelect.append(optionElement)
             })
-            addNewTaxonomyOption(subcategorySelect)
+
+            // ? For the first release, this option is removed
+            // addNewTaxonomyOption(subcategorySelect)
         })
     })
 }
@@ -102,8 +103,11 @@ function addNewTaxonomyOption(taxonomyField) {
  * @param {HTMLElement} form Formulaire sur lequel ajouter les évènements de formulaire 
  */
 export default function addFormEvents(form) {
+    console.log(form)
     addUpdateEvent(form)
     form.querySelectorAll('.js-taxonomy-field').forEach(taxonomyField => {
-        addNewTaxonomyOption(taxonomyField)
+
+        // ? For the first release, this option is removed
+        // addNewTaxonomyOption(taxonomyField)
     })
 }

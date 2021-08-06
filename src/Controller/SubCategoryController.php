@@ -55,7 +55,8 @@ class SubcategoryController extends AbstractController
             return $this->redirectToRoute('card_index');
         }
 
-        return $this->render('subcategory/_form.html.twig', [
+        return $this->render('subcategory/form.html.twig', [
+            'edit' => false,
             'subcategory' => $subcategory,
             'form' => $form->createView(),
         ]);
@@ -76,18 +77,18 @@ class SubcategoryController extends AbstractController
         }
 
         return $this->render('subcategory/form.html.twig', [
-            'edit' => $subcategory !== null,
+            'edit' => $subcategory->getId() !== null,
             'subcategory' => $subcategory,
             'form' => $form->createView(),
         ]);
     }
     
     /**
-     * @Route("/{id}", name="subcategory_delete", methods={"POST"})
+     * @Route("/{id}", name="subcategory_delete", methods={"GET"})
      */
     public function delete(Request $request, Subcategory $subcategory): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$subcategory->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$subcategory->getId(), $request->query->get('token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($subcategory);
             $entityManager->flush();

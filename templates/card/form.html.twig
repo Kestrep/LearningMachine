@@ -18,22 +18,20 @@
     {% endif %}
     </h1>
 
-    {{ include('card/_form.html.twig', {'edit': true}) }}
+    {{ include('card/_form.html.twig', {'edit': edit}) }}
 
     {# <div class="debug">
         <input type="text" name="" id="loremCopy-WordsCount" value="52">
-        <div class="btn-orange loremCopy-Button" data-count="loremCopy-WordsCount">Copie Lorem</div>
+        <div class="btn-orange loremCopy-Button" data-count="loremCopy-WordsCount">Co*pie Lorem</div>
         <div class="btn-orange request-new-button">New Card</div>
     </div> #}
 
-    <a href="{{ path('card_index') }}">back to list</a>
-
-    {% if edit %}
+    {#
         <form method="post" action="{{ path('card_delete', {'id': card.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ card.id) }}">
             <button class="btn">Delete</button>
         </form>
-    {% endif %}
+    #}
 </main>
 
 {% endblock %}

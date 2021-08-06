@@ -37,8 +37,14 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\EqualTo(propertyPath="confirm", message="Le mot de passe n'a pas été correctement confirmé")
      */
     private $password;
+
+    /**
+     * Password confirm
+     */
+    private $confirm;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -129,6 +135,14 @@ class User implements UserInterface
         $this->password = $password;
 
         return $this;
+    }
+    
+    /**
+     * 
+     */
+    public function getConfirm(): string
+    {
+        return (string) $this->confirm;
     }
 
     /**

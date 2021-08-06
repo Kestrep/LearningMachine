@@ -29,7 +29,6 @@ window.addEventListener('load', function() {
     if ($('form')) addFormEvents($('form'))
 
     if ($('.flashcards-ctr')) {
-        console.log('Here')
         updatePlayground()
     }
     if ($('.flash-ctr') && $('.flash-ctr').innerHTML !== '') {
