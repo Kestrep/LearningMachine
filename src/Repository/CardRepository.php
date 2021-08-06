@@ -32,7 +32,7 @@ class CardRepository extends ServiceEntityRepository
         }
         $query = $this
                     ->createQueryBuilder('c')
-                    ->join('c.subCategory', 's')
+                    ->join('c.subcategory', 's')
                     ->join('s.category', 'cat')
                     ->join('cat.user', 'u')
                     ->where('u = :user')

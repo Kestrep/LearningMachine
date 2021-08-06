@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\SubCategoryRepository;
+use App\Repository\SubcategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,32 +10,32 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @ORM\Entity(repositoryClass=SubCategoryRepository::class)
+ * @ORM\Entity(repositoryClass=SubcategoryRepository::class)
  * @Security("is_granted('ROLE_USER')", message="Vous devez vous connecter pour pouvoir continuer")
  */
-class SubCategory
+class Subcategory
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("subCategory:list")
+     * @Groups("Subcategory:list")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("subCategory:list")
+     * @Groups("Subcategory:list")
      */
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="subCategories")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="subcategories")
      */
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity=Card::class, mappedBy="subCategory")
+     * @ORM\OneToMany(targetEntity=Card::class, mappedBy="subcategory")
      */
     private $cards;
 
@@ -46,7 +46,7 @@ class SubCategory
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("subCategory:list")
+     * @Groups("Subcategory:list")
      */
     private $updatedAt;
 
@@ -101,7 +101,7 @@ class SubCategory
     {
         if (!$this->cards->contains($card)) {
             $this->cards[] = $card;
-            $card->setSubCategory($this);
+            $card->setSubcategory($this);
         }
 
         return $this;
@@ -111,8 +111,8 @@ class SubCategory
     {
         if ($this->cards->removeElement($card)) {
             // set the owning side to null (unless already changed)
-            if ($card->getSubCategory() === $this) {
-                $card->setSubCategory(null);
+            if ($card->getSubcategory() === $this) {
+                $card->setSubcategory(null);
             }
         }
 

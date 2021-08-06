@@ -6,7 +6,7 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\SubCategoryRepository;
+use App\Repository\SubcategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,11 +34,11 @@ class CategoryController extends AbstractController
     /**
      * @Route("/getSubcategories/", name="get_relative_subcategories", methods={"POST"})
      */
-    public function getRelativeSubcategories(SubCategoryRepository $subcategoryRepository, NormalizerInterface $normalizer, Request $request ): Response
+    public function getRelativeSubcategories(SubcategoryRepository $subcategoryRepository, NormalizerInterface $normalizer, Request $request ): Response
     {
 
         $categoryID = json_decode($request->getContent(), true);
-        return $this->json($subcategoryRepository->findAllFromGivenCategoryFromCurrentUser($categoryID), 200, [], ['groups' => 'subCategory:list']);
+        return $this->json($subcategoryRepository->findAllFromGivenCategoryFromCurrentUser($categoryID), 200, [], ['groups' => 'Subcategory:list']);
     }
 
 
@@ -78,7 +78,7 @@ class CategoryController extends AbstractController
                     'icon' => 'feather',
                 ], 201);
             };
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('card_index');
         }
 
         // Form rendering
@@ -109,6 +109,6 @@ class CategoryController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('category_index');
+        return $this->redirectToRoute('card_index');
     }
 }

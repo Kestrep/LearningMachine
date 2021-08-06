@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Subcategory{% endblock %}
+
+{% block body %}
+<main>
+    <h1>Create new Subcategory</h1>
+
+    {{ include('subcategory/_form.html.twig', {'button_label': 'Update'}) }}
+
+    {% if edit %}
+        <form method="post" action="{{ path('subcategory_delete', {'id': subcategory.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ subcategory.id) }}">
+            <button class="btn">Delete</button>
+        </form>
+    {% endif %}
+</main>
+{% endblock %}

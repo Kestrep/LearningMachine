@@ -4,9 +4,9 @@ namespace App\Form;
 
 use App\Entity\Card;
 use App\Entity\Category;
-use App\Entity\SubCategory;
+use App\Entity\Subcategory;
 use App\Repository\CategoryRepository;
-use App\Repository\SubCategoryRepository;
+use App\Repository\SubcategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -19,10 +19,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CardType extends AbstractType
 {
-    private $subCategoryRepository;
+    private $subcategoryRepository;
     private $categoryRepository;
-    public function __construct(SubCategoryRepository $subCategoryRepository, CategoryRepository $categoryRepository) {
-        $this->subCategoryRepository = $subCategoryRepository;
+    public function __construct(SubcategoryRepository $subcategoryRepository, CategoryRepository $categoryRepository) {
+        $this->subcategoryRepository = $subcategoryRepository;
         $this->categoryRepository = $categoryRepository;
 
     }
@@ -33,8 +33,8 @@ class CardType extends AbstractType
                 'class' => Category::class,
                 'attr' => ['class' => 'js-taxonomy-field']
             ])
-            ->add('subCategory', EntityType::class, [
-                'class' => SubCategory::class,
+            ->add('subcategory', EntityType::class, [
+                'class' => Subcategory::class,
                 'choice_label' => 'name',
                 'attr' => ['class' => 'js-taxonomy-field']
             ])
@@ -50,9 +50,9 @@ class CardType extends AbstractType
             $category = $event->getData();
             $form = $event->getForm()->getParent();
 
-            $form->add('subCategory', EntityType::class, [
-                'class' => SubCategory::class,
-                'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($category),
+            $form->add('subcategory', EntityType::class, [
+                'class' => Subcategory::class,
+                'choices' => $this->subcategoryRepository->findAllFromGivenCategoryFromCurrentUser($category),
                 'choice_label' => 'name',
                 'attr' => ['class' => 'option-open-form']
             ]);
@@ -76,11 +76,11 @@ class CardType extends AbstractType
         $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {            
             $form = $event->getForm();
 
-            $form->add('subCategory', EntityType::class, [
-                'class' => SubCategory::class,
+            $form->add('subcategory', EntityType::class, [
+                'class' => Subcategory::class,
                 'attr' => ['class' => 'js-taxonomy-field'],
                 'choice_label' => 'name',
-                'choices' => $this->subCategoryRepository->findAllFromGivenCategoryFromCurrentUser($form->get('category')->getData()),
+                'choices' => $this->subcategoryRepository->findAllFromGivenCategoryFromCurrentUser($form->get('category')->getData()),
             ]);
         });
     }

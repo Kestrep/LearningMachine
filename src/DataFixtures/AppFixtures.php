@@ -4,11 +4,9 @@ namespace App\DataFixtures;
 
 use App\Entity\Card;
 use App\Entity\Category;
-use App\Entity\SubCategory;
+use App\Entity\Subcategory;
 use App\Entity\User;
 use Faker\Factory;
-
-
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -53,15 +51,15 @@ class AppFixtures extends Fixture
                 $user->addCategory($category);
 
                 for ($k=0; $k < mt_rand(2, 3); $k++) { 
-                    $subCategory = new SubCategory();
+                    $subcategory = new Subcategory();
 
-                    $subCategory
-                        ->setName("subCat°{$k} cat°{$j} user°{$i}")
+                    $subcategory
+                        ->setName("subcat°{$k} cat°{$j} user°{$i}")
                         ->setDescription($faker->sentence(9))
                         ->setCreatedAt($faker->dateTimeBetween('-1 hour', 'now'))
                         ->setUpdatedAt($faker->dateTimeBetween('-1 hour', 'now'))
                         ;
-                    $category->addSubCategory($subCategory);
+                    $category->addSubcategory($subcategory);
 
                     for ($l = 0; $l < mt_rand(2, 4); $l++) {
                         $card = new Card();
@@ -80,11 +78,11 @@ class AppFixtures extends Fixture
                             ->setNote($faker->sentence(mt_rand(8, 12)))
                             ->setStage(mt_rand(0, 6));
                         
-                        $subCategory->addCard($card);
+                        $subcategory->addCard($card);
                         $manager->persist($card);
                     }
 
-                    $manager->persist($subCategory);
+                    $manager->persist($subcategory);
                 }
 
                 $manager->persist($category);

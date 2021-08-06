@@ -69,9 +69,9 @@ class Card
     private $stage;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SubCategory::class, inversedBy="cards")
+     * @ORM\ManyToOne(targetEntity=Subcategory::class, inversedBy="cards")
      */
-    private $subCategory;
+    private $subcategory;
 
     /**
      * @ORM\Column(type="datetime")
@@ -191,14 +191,14 @@ class Card
         return $this;
     }
 
-    public function getSubCategory(): ?SubCategory
+    public function getSubcategory(): ?Subcategory
     {
-        return $this->subCategory;
+        return $this->subcategory;
     }
 
-    public function setSubCategory(?SubCategory $subCategory): self
+    public function setSubcategory(?Subcategory $subcategory): self
     {
-        $this->subCategory = $subCategory;
+        $this->subcategory = $subcategory;
 
         return $this;
     }

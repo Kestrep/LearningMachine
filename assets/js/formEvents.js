@@ -7,10 +7,10 @@ import { displayModal } from './modal'
 function addUpdateEvent(form) {
     // TODO : supprimer
     const categorySelect = $('#card_category', form)
-    const subCategorySelect = $('#card_subCategory', form)
+    const SubcategorySelect = $('#card_Subcategory', form)
 
     // Vérifie qu'on est dans le formulaire
-    if (categorySelect == null || subCategorySelect == null) return
+    if (categorySelect == null || SubcategorySelect == null) return
 
 
     categorySelect.addEventListener('change', e => {
@@ -31,16 +31,16 @@ function addUpdateEvent(form) {
             })
         }).then(result => result.json()).then(objects => {
             console.log(objects)
-            subCategorySelect.innerHTML = ''
+            SubcategorySelect.innerHTML = ''
 
             // Ajoute les options au select
             objects.forEach(obj => {
                 const optionElement = document.createElement('option')
                 optionElement.value = obj.id
                 optionElement.innerText = obj.name
-                subCategorySelect.append(optionElement)
+                SubcategorySelect.append(optionElement)
             })
-            addNewTaxonomyOption(subCategorySelect)
+            addNewTaxonomyOption(SubcategorySelect)
         })
     })
 }
@@ -53,7 +53,7 @@ function addUpdateEvent(form) {
 function addNewTaxonomyOption(taxonomyField) {
 
     let newOption = ''
-    if (taxonomyField.id === 'card_subCategory') {
+    if (taxonomyField.id === 'card_Subcategory') {
         newOption = textToHTML('<option class="form-button">Ajouter une sous-catégorie</option>')
     } else if (taxonomyField.id === 'card_category') {
         newOption = textToHTML('<option class="form-button">Ajouter une catégorie</option>')
@@ -61,14 +61,14 @@ function addNewTaxonomyOption(taxonomyField) {
 
     // TODO : changer le newurl - ne veut rien dire
     newOption.addEventListener('click', async() => {
-        // Trouver l'ID de la catégorie en cours // TODO : Si nouvelle subcategory, alors on prérempli la catégorie
+        // Trouver l'ID de la catégorie en cours // TODO : Si nouvelle Subcategory, alors on prérempli la catégorie
         let categoryId = taxonomyField.closest('form').querySelector('#card_category').value
 
         // Url du formulaire pour la catégorie  ou la sous catégorie
         let url = taxonomyField.dataset.newurl
 
         // If the taxonomyField is sub_category, get the category value and add it to the url
-        if (taxonomyField.id === 'card_subCategory') {
+        if (taxonomyField.id === 'card_Subcategory') {
             url = url + '/' + categoryId
             console.log(url)
         }

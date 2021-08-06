@@ -4,8 +4,8 @@
         'data-getUrl': path('get_categories'),
         'data-getSubcategoriesUrl': path('get_relative_subcategories')
     }}) }}
-    {{ form_row(form.subCategory, { 'attr': {
-        'data-newUrl': path('sub_category_new'),
+    {{ form_row(form.subcategory, { 'attr': {
+        'data-newUrl': path('subcategory_new'),
         'data-getUrl': path('get_relative_subcategories'),
         }}) }}
     {{ form_widget(form) }}

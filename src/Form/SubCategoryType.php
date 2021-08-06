@@ -3,14 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Category;
-use App\Entity\SubCategory;
+use App\Entity\Subcategory;
 use App\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SubCategoryType extends AbstractType
+class SubcategoryType extends AbstractType
 {
     private $categoryRepository;
 
@@ -36,7 +36,7 @@ class SubCategoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => SubCategory::class,
+            'data_class' => Subcategory::class,
         ]);
     }
 }

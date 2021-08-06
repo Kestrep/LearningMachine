@@ -7,7 +7,7 @@ use App\Form\CardType;
 use App\Entity\Category;
 use App\Repository\CardRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\SubCategoryRepository;
+use App\Repository\SubcategoryRepository;
 use DateInterval;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -140,7 +140,7 @@ class CardController extends AbstractController
     public function new(Request $request, Card $card = null, EntityManagerInterface $em): Response
     {
         // Vérification du user
-        if($card && $card->getSubCategory()->getCategory()->getUser() !== $this->getUser()) {
+        if($card && $card->getSubcategory()->getCategory()->getUser() !== $this->getUser()) {
             return $this->redirectToRoute('card_index');
         } else if(!$card) {
             $card = new Card();
@@ -156,13 +156,13 @@ class CardController extends AbstractController
             $card->setCreatedAt(new \DateTime);
 
             if($card->getID() !== null) {
-                $subCategory = $card->getSubCategory();
-                $category = $subCategory->getCategory();
+                $subcategory = $card->getSubcategory();
+                $category = $subcategory->getCategory();
                 
-                $subCategory->setUpdatedAt(new \DateTime);
+                $subcategory->setUpdatedAt(new \DateTime);
                 $category->setUpdatedAt(new \DateTime);
 
-                $em->persist($subCategory, $category);
+                $em->persist($subcategory, $category);
             }
             
             $em->persist($card);

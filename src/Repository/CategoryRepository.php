@@ -23,7 +23,7 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Category[] Returns an array of SubCategory owned by the current user
+     * @return Category[] Returns an array of Subcategory owned by the current user
      */
     public function findAllFromCurrentUser() {
         $query = $this
