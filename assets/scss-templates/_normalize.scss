@@ -50,6 +50,9 @@ header {
 
 main {
     position: relative;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
     flex-grow: 1;
     padding: $gutter;
 }

@@ -28,14 +28,4 @@ main {
             font-size: 1rem;
         }
     }
-    // TODO: Supprimer
-    .info-scroll {
-        flex-basis: 100%;
-        flex-shrink: 0;
-        color: $orange;
-        font-weight: 200;
-        font-size: 0.8rem;
-        text-decoration: underline;
-        text-align: right;
-    }
 }

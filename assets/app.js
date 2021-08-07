@@ -14,6 +14,7 @@ import handleModal, { initializeModal } from './js/modal';
 import addFormEvents from './js/formEvents';
 import { $, ifExist, displayFlash, textToHTML, displayAlert } from './js/utilities';
 import updatePlayground from './play.js'
+import { initializeShowcards } from './js/components/showcard.js'
 
 handleBurger()
 
@@ -28,6 +29,15 @@ window.addEventListener('load', function() {
 
     if ($('form')) addFormEvents($('form'))
 
+    // Initialize showcard activities
+    if ($('.Showcard')) {
+        $('.Showcard').forEach(c => {
+            initializeShowcards(c)
+        })
+    }
+
+
+    // Initialize flascard activities
     if ($('.flashcards-ctr')) {
         updatePlayground()
     }
