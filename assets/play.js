@@ -1,5 +1,5 @@
 import { initializeModal } from './js/modal';
-import { $, textToHTML, displayFlash } from './js/utilities';
+import { $, textToHTML, displayAlert } from './js/utilities';
 /** Informations générales
  * Les cycles de vie d'un carte :
  * 
@@ -151,8 +151,7 @@ const handleCard = async(card, order = 'fail') => {
                         action: 'stage-up'
                     })
                 }).then(res => res.json()).then(res => {
-                    console.log(res)
-                    displayFlash(res.message, res.exclamation, res.color, res.icon)
+                    displayAlert(res)
                 })
             }
 

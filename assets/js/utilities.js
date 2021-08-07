@@ -83,4 +83,19 @@ const displayFlash = (message, exclamation = null, color = 'green', icon = 'thum
     }, 100)
 }
 
-export { $, ifExist, textToHTML, displayFlash }
+/**
+ * Active une alerte en haut du site
+ * @param {JSON} content
+ */
+const displayAlert = (content = null) => {
+    if (!content && $('.alert-content')) {
+        content = $('.alert-content').dataset.content
+        content = JSON.parse(content)
+    }
+
+    if (content) {
+        $('main').appendChild(textToHTML(`<div class="alert f-cc"><i class="icon-${content.icon} inht"></i>${content.message}</div>`))
+    }
+}
+
+export { $, ifExist, textToHTML, displayFlash, displayAlert }

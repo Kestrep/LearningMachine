@@ -28,6 +28,13 @@ class CardController extends AbstractController
      */
     public function index(CardRepository $cardRepository): Response
     {
+        $alert = [
+            'message' => 'Une action a été faite',
+            'icon' => 'thumbs-up',
+            'color' => 'orange'
+        ];
+        $this->addFlash('alert', json_encode($alert));
+
         return $this->render('card/index.html.twig', [
             'cards' => $cardRepository->findUserCards(),
         ]);
@@ -111,12 +118,15 @@ class CardController extends AbstractController
         $em->persist($card);
         $em->flush();
 
-        return $this->json([
+        $alert = [
             'message' => $message,
-            'exclamation' => 'Hey !',
-            'color' => 'orange',
-            'icon' => 'feather',
-        ], 201, [], ['groups' => 'card:read']);
+            'icon' => 'thumbs-up',
+            'color' => 'orange'
+        ];
+
+
+
+        return $this->json($alert, 201, [], ['groups' => 'card:read']);
     }
 
     // TODO Revoir cette partie

@@ -1,26 +1,23 @@
 // Normalize
 // General template (Header box, Main and footer)
-
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body, html {
+body,
+html {
     width: auto;
     height: auto;
     min-height: 100vh;
-
     color: $black;
     font-size: 16px;
     background-color: $lightgrey;
     font-family: $montserrat;
     font-weight: 200;
-    
     line-height: 1.2rem;
     text-align: justify;
-
     &.overflow-hidden {
         overflow: hidden;
     }
@@ -46,7 +43,6 @@ body {
     flex-direction: column;
 }
 
-
 header {
     min-height: 30px;
     background-color: $black;
@@ -55,8 +51,7 @@ header {
 main {
     position: relative;
     flex-grow: 1;
-
-    padding: $gutter/1.5;
+    padding: $gutter;
 }
 
 footer {

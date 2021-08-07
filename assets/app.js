@@ -12,7 +12,7 @@ import handleBurger from './js/burger';
 import debugButtons from './js/debug';
 import handleModal, { initializeModal } from './js/modal';
 import addFormEvents from './js/formEvents';
-import { $, ifExist, displayFlash, textToHTML } from './js/utilities';
+import { $, ifExist, displayFlash, textToHTML, displayAlert } from './js/utilities';
 import updatePlayground from './play.js'
 
 handleBurger()
@@ -34,6 +34,9 @@ window.addEventListener('load', function() {
     if ($('.flash-ctr') && $('.flash-ctr').innerHTML !== '') {
         console.error('There is a flash in the page')
     }
+
+    // Display alert if alert in the DOM
+    displayAlert();
 })
 
 // start the Stimulus application
