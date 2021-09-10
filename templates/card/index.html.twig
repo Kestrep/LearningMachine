@@ -3,18 +3,23 @@
 {% block title %}Card index{% endblock %}
 {% block body %}
 <main>
+
     <section class="top">
-        <h1>Vue d'ensemble</h1>
-        <div class="info-scroll">
-            Plusieurs cartes apprises ici
-        </div>
     </section>
+    
+    <!-- TODO : explore :: Expérience faite d'aller voir comment lier les api PONS et Leipzig pour avoir plein de mots
+    <div class="debug" {# style="display: none;" #}>
+            <div class="btn-orange pons-button">Fetch PONS !</div>
+            <div class="btn-orange leipzig-button">Fetch Leipzig !</div>
+            <div class="response-ctr">Coucou</div>
+    </div>
+    -->
     <section class="body">
         {% for card in cards %}
 
             <div id="{{card.id}}" class="Showcard folded">
                 <div class="top f-bc">
-                    <div class="comment">Il y a une carte similaire dans le paquet</div>
+                    {# <div class="comment">Il y a une carte similaire dans le paquet</div> #}
                     <nav class="f-bc">
                         <a href="{{ path('card_edit', {'id': card.id}) }}" class="icon-feather"></a>
                         <div class="v-separator"></div>
