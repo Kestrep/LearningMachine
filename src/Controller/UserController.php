@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Entity\Subcategory;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -46,10 +48,36 @@ class UserController extends AbstractController
             $password = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
 
+            
+
+            $currentDate = new \DateTime();
+            $category = new Category();
+
+            $category
+                ->setName("Undefined category")
+                ->setDescription("Pot-pourri de départ")
+                ->setCreatedAt($currentDate)
+                ->setUpdatedAt($currentDate)
+                ;
+            $user->addCategory($category);
+
+            $subcategory = new Subcategory();
+
+            $subcategory
+                ->setName("Undefined subcategory")
+                ->setDescription("Pot-pourri de départ")
+                ->setCreatedAt($currentDate)
+                ->setUpdatedAt($currentDate)
+                ;
+            $category->addSubcategory($subcategory);
+
             $entityManager->persist($user);
+            $entityManager->persist($category);
+            $entityManager->persist($subcategory);
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('card_index');
         }
 
         return $this->render('user/new.html.twig', [

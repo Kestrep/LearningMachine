@@ -39,11 +39,19 @@ class CardType extends AbstractType
                 'attr' => ['class' => 'js-taxonomy-field']
             ])
             ->add('front_maincontent', TextareaType::class)
-            ->add('front_subcontent', TextareaType::class)
+            ->add('front_subcontent', TextareaType::class, [
+                'required' => false
+            ])
             ->add('back_main_content', TextareaType::class)
-            ->add('back_subcontent', TextareaType::class)
-            ->add('front_clue', TextareaType::class)
-            ->add('back_clue', TextareaType::class)
+            ->add('back_subcontent', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('front_clue', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('back_clue', TextareaType::class, [
+                'required' => false
+            ])
             ->add('note', TextareaType::class)
         ;
         $builder->get('category')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {

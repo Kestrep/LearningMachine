@@ -19,9 +19,7 @@ class UserType extends AbstractType
             ->add('email', TextType::class)
             // ->add('roles')
             ->add('password', PasswordType::class)
-            ->add('confirm', PasswordType::class, [
-                'mapped' => false
-            ])
+            ->add('confirm', PasswordType::class)
             // ->add('register_at')
             // ->add('last_connection_at')
         ;

@@ -15,6 +15,9 @@
     </div>
     -->
     <section class="body">
+        {% if cards|length <  1 %}
+            Vous n'avez pas encore enregistré de cards
+        {% endif %}
         {% for card in cards %}
 
             <div id="{{card.id}}" class="Showcard folded">
