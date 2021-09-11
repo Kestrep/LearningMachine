@@ -44,21 +44,25 @@ class Card
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("card:read")
      */
     private $backSubcontent;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("card:read")
      */
     private $frontClue;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("card:read")
      */
     private $backClue;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("card:read")
      */
     private $note;
 

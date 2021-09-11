@@ -52,7 +52,9 @@ class CardType extends AbstractType
             ->add('back_clue', TextareaType::class, [
                 'required' => false
             ])
-            ->add('note', TextareaType::class)
+            ->add('note', TextareaType::class, [
+                'required' => false
+            ])
         ;
         $builder->get('category')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
             $category = $event->getData();

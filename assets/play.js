@@ -23,9 +23,7 @@ import { $, textToHTML, displayAlert } from './js/utilities';
  */
 
 let deck = [];
-let current;
 const playground = $('.flashcards-ctr');
-
 
 /**
  * Configure le deck, configure les cartes
@@ -41,11 +39,12 @@ export default async function updatePlayground() {
         idList.push(card.id)
     })
 
+    // TODO : find what's use
     if (idList.length === 0) {
         idList = [1]
     }
 
-    const jsonPost = {
+    let jsonPost = {
         count: (DECK_SIZE - realDeckCount),
         idList: idList
     }
@@ -78,13 +77,13 @@ export default async function updatePlayground() {
     }
 
     // Initie la première carte du deck
-    // ! Ca va poser problème !
     $('.flashcards-ctr').textContent = ''
     $('.flashcards-ctr').appendChild(deck[0].html)
 }
 
-const replaceCard = (newIndex = 2) => {
+const replaceCard = (newIndex) => {
 
+    if (deck.length <= 1) return deck;
     const card = deck.shift();
     let tempArray = [];
     for (let i = 0; i < deck.length; i++) {
@@ -97,11 +96,10 @@ const replaceCard = (newIndex = 2) => {
 }
 
 
-const handleCard = async(card, order = 'fail') => {
+const handleCard = (card, order = 'fail') => {
 
     // Gérer les évènements quand le front a été joué
     if (card.frontPlayed === false) {
-
         card.frontPlayed = true
 
         // On enregistre le succès
@@ -119,8 +117,7 @@ const handleCard = async(card, order = 'fail') => {
             deck = replaceCard(3)
         } else if (order === 'success') {
 
-            console.log(card.playstep)
-                // Ca dépend du playstep
+            // Ca dépend du playstep
             if (card.playstep === 1) { // Carte jamais jouée
 
                 card.playstep = 2
@@ -302,8 +299,6 @@ function addBackEvents(element, card) {
     // mouse down ==> récupère des coordonnées
     element.addEventListener('mousedown', e => {
 
-
-
         if (card.frontPlayed === false || card.frontPlayed === null) return
 
         // Initialize X and Y
@@ -339,6 +334,7 @@ function addBackEvents(element, card) {
             element.style.opacity = 1
             $('.card-side.front', card.html).style.transform = `translate(0%)`
             $('.card-side.front', card.html).style.opacity = 1
+            $('.note-ctr', playground).classList.remove('active')
             handleCard(card, 'success')
         } else if (traveledX < -1) {
             initiate = false
@@ -346,6 +342,7 @@ function addBackEvents(element, card) {
             element.style.opacity = 1
             $('.card-side.front', card.html).style.transform = `translate(0%)`
             $('.card-side.front', card.html).style.opacity = 1
+            $('.note-ctr', playground).classList.remove('active')
             handleCard(card, 'fail')
         }
 
@@ -369,6 +366,6 @@ function addBackEvents(element, card) {
 
     element.addEventListener('dblclick', e => {
         if (card.frontPlayed === false || card.frontPlayed === null) return
-        console.log('Double click')
+        $('.note-ctr', playground).classList.add('active')
     })
 }

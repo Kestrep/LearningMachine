@@ -48,21 +48,18 @@ class CardController extends AbstractController
     {
         $parameters = json_decode($request->getContent(), true);
 
+        // Si count = 0, on retourne un objet vide
         if ($parameters['count'] === null) {
             return $this->json([], 200, [], ['groups' => 'card:read']);
         }
 
         $cards = $cardRepository->findUserCards($parameters['count'], $parameters['idList']);
-        
-        // Faire remonter les cartes à jouer en fonction de leur date de remise en jeu
-        
         $normalizedCards = $normalizer->normalize($cards, null, [
             'groups' => 'card:read'
         ]);
 
-        
+        // Ajouter un champs HTML aux objets cards
         foreach($normalizedCards as $key => $value) {
-
             $localCard = $cards[$key];
             $normalizedCards[$key] += ["html" => $this->renderView('card/_flashcard.html.twig', [
                 'card' => $localCard
@@ -137,7 +134,7 @@ class CardController extends AbstractController
     public function play(CardRepository $cardRepository): Response
     {
         return $this->render('card/play.html.twig', [
-            'card' => $cardRepository->findAll()['0'],
+            'card' => $cardRepository->findUserCards(1)['0'],
         ]);
     }
     
@@ -165,6 +162,7 @@ class CardController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $card->setStage(2);
             $card->setCreatedAt(new \DateTime);
+            $card->setPlayAt(new \DateTime);
 
             if($card->getID() !== null) {
                 $subcategory = $card->getSubcategory();
